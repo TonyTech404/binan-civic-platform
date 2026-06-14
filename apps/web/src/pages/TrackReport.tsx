@@ -17,24 +17,15 @@ export function TrackReport() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (ref) void lookup(ref);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ref]);
+  useEffect(() => { if (ref) void lookup(ref); }, [ref]); // eslint-disable-line
 
   async function lookup(value: string) {
     const v = value.trim().toUpperCase();
     if (!v) return;
-    setLoading(true);
-    setError(null);
-    setReport(null);
-    try {
-      setReport(await trackReport(v));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not find that report.");
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true); setError(null); setReport(null);
+    try { setReport(await trackReport(v)); }
+    catch (err) { setError(err instanceof Error ? err.message : "Could not find that report."); }
+    finally { setLoading(false); }
   }
 
   function onSubmit(e: React.FormEvent) {
@@ -43,26 +34,35 @@ export function TrackReport() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
-      <h1 className="text-2xl font-bold">Track a report</h1>
-      <p className="mt-1 text-slate-600">Enter the reference number you received.</p>
+    <div className="bg-slate-50 px-4 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
+      <div className="mx-auto max-w-[760px]">
+        <div className="animate-fade-in-up">
+          <h1 className="font-serif text-[22px] font-bold tracking-[-0.01em] text-slate-900 sm:text-[26px]">
+            Track a Report
+          </h1>
+          <p className="mt-1.5 mb-6 text-[14px] text-slate-500">
+            Enter the reference number you received when you submitted your report.
+          </p>
 
-      <form onSubmit={onSubmit} className="mt-5 flex gap-2">
-        <Input
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="BB-2026-000123"
-          className="font-mono uppercase"
-        />
-        <Button type="submit" disabled={loading}>
-          {loading ? <Spinner className="h-5 w-5" /> : <Search className="h-5 w-5" />}
-          Track
-        </Button>
-      </form>
+          <form onSubmit={onSubmit} className="mb-7 flex gap-2.5">
+            <Input value={query} onChange={(e) => setQuery(e.target.value)}
+              placeholder="BB-2026-000123"
+              className="h-11 font-mono text-[14px] uppercase tracking-[0.04em] sm:text-[15px]" />
+            <Button type="submit" disabled={loading} className="h-11 shrink-0 gap-2 px-5 sm:px-6 transition-transform active:scale-[0.98]">
+              {loading ? <Spinner className="h-[14px] w-[14px]" /> : <Search className="h-[14px] w-[14px]" />}
+              Track
+            </Button>
+          </form>
+        </div>
 
-      {error && <p className="mt-5 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
+        {error && (
+          <div className="mb-5 rounded-[3px] border border-brand-200 bg-brand-50 px-4 py-3 text-[13px] text-brand-700 animate-fade-in">
+            {error}
+          </div>
+        )}
 
-      {report && <ReportView report={report} />}
+        {report && <ReportView report={report} />}
+      </div>
     </div>
   );
 }
@@ -72,86 +72,80 @@ function ReportView({ report }: { report: TrackedReport }) {
   const currentIdx = REPORT_STATUSES.indexOf(report.status as ReportStatus);
 
   return (
-    <div className="mt-6 space-y-4">
-      <Card>
-        <CardBody>
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
-                <Icon className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="font-semibold">{categoryLabel(report.category)}</p>
-                <p className="text-sm text-slate-500">
-                  {report.barangay} · {report.reference_number}
-                </p>
-              </div>
+    <div className="space-y-4 animate-fade-in-up">
+      {/* Report card */}
+      <div className="overflow-hidden rounded-md border border-slate-200 bg-white">
+        <div className="flex items-start justify-between gap-4 border-b border-slate-100 px-4 py-4 sm:px-6 sm:py-5">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[3px] border border-slate-200 bg-slate-50 sm:h-10 sm:w-10">
+              <Icon className="h-4 w-4 text-slate-500 sm:h-[18px] sm:w-[18px]" />
             </div>
-            <StatusBadge status={report.status} />
+            <div>
+              <p className="text-[14px] font-semibold text-slate-900 sm:text-[15px]">{categoryLabel(report.category)}</p>
+              <p className="font-mono text-[11px] text-slate-400">{report.reference_number} · {report.barangay}</p>
+            </div>
           </div>
+          <StatusBadge status={report.status} className="flex-shrink-0" />
+        </div>
 
-          <p className="mt-4 text-slate-700">{report.description}</p>
+        <div className="border-b border-slate-100 px-4 py-4 sm:px-6 sm:py-5">
+          <p className="text-[14px] leading-[1.6] text-slate-700">{report.description}</p>
           {report.address && (
-            <p className="mt-2 flex items-center gap-1 text-sm text-slate-500">
-              <MapPin className="h-4 w-4" /> {report.address}
-            </p>
+            <div className="mt-2 flex items-center gap-1.5 text-[12px] text-slate-400">
+              <MapPin className="h-3 w-3" /> {report.address}
+            </div>
           )}
-          <p className="mt-1 text-xs text-slate-400">Submitted {formatDate(report.created_at)}</p>
-        </CardBody>
-      </Card>
+          <p className="mt-1 text-[12px] text-slate-400">Submitted {formatDate(report.created_at)}</p>
+        </div>
 
-      {/* Status timeline */}
-      <Card>
-        <CardBody>
-          <h2 className="mb-4 font-semibold">Progress</h2>
-          <ol className="space-y-0">
+        {/* Timeline */}
+        <div className="px-4 py-4 sm:px-6 sm:py-5">
+          <div className="mb-4 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Progress</div>
+          <ol>
             {REPORT_STATUSES.map((s, i) => {
               const done = i <= currentIdx;
+              const current = i === currentIdx;
               const entry = [...report.history].reverse().find((h) => h.status === s);
               return (
-                <li key={s} className="flex gap-3">
-                  <div className="flex flex-col items-center">
-                    <span
-                      className={
-                        "flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold " +
-                        (done ? "bg-brand-600 text-white" : "bg-slate-200 text-slate-400")
-                      }
-                    >
+                <li key={s} className="flex gap-3.5">
+                  <div className="flex flex-shrink-0 flex-col items-center">
+                    <span className={"flex h-7 w-7 items-center justify-center rounded-full font-mono text-[11px] font-bold " +
+                      (current ? "bg-brand-600 text-white" : done ? "bg-slate-900 text-white" : "bg-slate-200 text-slate-400")}>
                       {i + 1}
                     </span>
                     {i < REPORT_STATUSES.length - 1 && (
-                      <span className={"my-0.5 h-8 w-0.5 " + (i < currentIdx ? "bg-brand-600" : "bg-slate-200")} />
+                      <span className={"my-0.5 h-8 w-px " + (i < currentIdx ? "bg-slate-900" : "bg-slate-200")} />
                     )}
                   </div>
-                  <div className="pb-4">
-                    <p className={done ? "font-medium" : "text-slate-400"}>{STATUS_LABELS[s]}</p>
-                    {entry && (
-                      <p className="text-xs text-slate-400">{formatDate(entry.created_at)}</p>
-                    )}
+                  <div className="pb-5">
+                    <p className={"text-[13px] font-semibold " + (current ? "text-brand-600" : done ? "text-slate-900" : "text-slate-400")}>
+                      {STATUS_LABELS[s]}
+                    </p>
+                    {entry && <p className="text-[11px] text-slate-400">{formatDate(entry.created_at)}</p>}
                   </div>
                 </li>
               );
             })}
           </ol>
-        </CardBody>
-      </Card>
+        </div>
+      </div>
 
       {/* Photos */}
       {(report.photo_key || report.resolution_photo_key) && (
         <Card>
-          <CardBody>
-            <h2 className="mb-3 font-semibold">Photos</h2>
+          <CardBody className="p-4 sm:p-5">
+            <h2 className="mb-3 text-[13px] font-semibold text-slate-900">Photos</h2>
             <div className="grid grid-cols-2 gap-3">
               {report.photo_key && (
                 <figure>
-                  <img src={photoUrl(report.photo_key)} alt="Reported issue" className="h-40 w-full rounded-xl object-cover" />
-                  <figcaption className="mt-1 text-center text-xs text-slate-500">Reported</figcaption>
+                  <img src={photoUrl(report.photo_key)} alt="Reported issue" className="h-36 w-full rounded-[3px] object-cover sm:h-40" />
+                  <figcaption className="mt-1 text-center text-[12px] text-slate-400">Reported</figcaption>
                 </figure>
               )}
               {report.resolution_photo_key && (
                 <figure>
-                  <img src={photoUrl(report.resolution_photo_key)} alt="Resolution" className="h-40 w-full rounded-xl object-cover" />
-                  <figcaption className="mt-1 text-center text-xs text-emerald-600">Resolved ✓</figcaption>
+                  <img src={photoUrl(report.resolution_photo_key)} alt="Resolution" className="h-36 w-full rounded-[3px] object-cover sm:h-40" />
+                  <figcaption className="mt-1 text-center text-[12px] text-green-600">Resolved ✓</figcaption>
                 </figure>
               )}
             </div>
@@ -160,15 +154,9 @@ function ReportView({ report }: { report: TrackedReport }) {
       )}
 
       {/* Map */}
-      <Card>
-        <CardBody className="p-0">
-          <LocationMap
-            value={{ lat: report.latitude, lng: report.longitude }}
-            interactive={false}
-            className="h-52 w-full overflow-hidden rounded-2xl"
-          />
-        </CardBody>
-      </Card>
+      <div className="overflow-hidden rounded-md border border-slate-200">
+        <LocationMap value={{ lat: report.latitude, lng: report.longitude }} interactive={false} className="h-44 w-full sm:h-52" />
+      </div>
     </div>
   );
 }

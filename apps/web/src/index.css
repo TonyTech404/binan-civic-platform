@@ -14,9 +14,15 @@ body,
 
 body {
   @apply bg-slate-50 text-slate-900 antialiased;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
-/* MapLibre control tweaks to match the UI */
+/* MapLibre control tweaks */
 .maplibregl-ctrl-attrib {
   font-size: 10px;
+}
+
+/* Ensure IBM Plex Mono renders correctly for reference numbers */
+.font-mono {
+  font-feature-settings: "tnum";
 }

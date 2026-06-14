@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShieldCheck } from "lucide-react";
+import { Lock } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { Button, Card, CardBody, Input, Label, Spinner } from "@/components/ui";
+import { Button, Input, Label, Spinner } from "@/components/ui";
 import { useAuth } from "@/hooks/useAuth";
 
 export function AdminLogin() {
@@ -31,24 +31,54 @@ export function AdminLogin() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
-      <Card className="w-full max-w-sm">
-        <CardBody>
-          <div className="mb-6 flex flex-col items-center text-center">
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-600 text-white">
-              <ShieldCheck className="h-6 w-6" />
-            </span>
-            <h1 className="mt-3 text-xl font-bold">Bantay Biñan Admin</h1>
-            <p className="text-sm text-slate-500">City staff sign in</p>
+    <div className="flex min-h-screen items-center justify-center bg-[#F5F4F1] px-4">
+      {/* Red accent bar */}
+      <div className="fixed top-0 left-0 right-0 h-1 bg-brand-600" />
+
+      <div className="w-full max-w-[400px]">
+        {/* Restricted notice */}
+        <div className="mb-6 flex items-start gap-2 rounded-sm border-l-[3px] border-l-brand-600 bg-brand-50 px-3.5 py-2.5">
+          <Lock className="mt-[1px] h-3.5 w-3.5 flex-shrink-0 text-brand-600" />
+          <div>
+            <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-brand-800 mb-0.5">
+              Restricted Access
+            </div>
+            <div className="text-[11px] leading-[1.5] text-brand-700">
+              Authorized City Government of Biñan personnel only.
+            </div>
+          </div>
+        </div>
+
+        {/* Login card */}
+        <div className="rounded-md border border-slate-200 bg-white p-9 shadow-sm">
+          {/* Brand */}
+          <div className="mb-8 flex items-center gap-3">
+            <img
+              src="/binan-seal.png"
+              alt="Biñan City Seal"
+              width={52}
+              height={52}
+              className="flex-shrink-0 rounded-full object-cover"
+              style={{ boxShadow: "0 0 0 2px #D4A800" }}
+            />
+            <div>
+              <div className="font-serif text-[16px] font-bold tracking-[-0.01em] text-slate-900">
+                BANTAY BIÑAN
+              </div>
+              <div className="text-[10px] font-bold uppercase tracking-[0.1em] text-brand-600">
+                Admin Portal
+              </div>
+            </div>
           </div>
 
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Email Address</Label>
               <Input
                 id="email"
                 type="email"
                 autoComplete="email"
+                placeholder="staff@binan.gov.ph"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -60,19 +90,20 @@ export function AdminLogin() {
                 id="pw"
                 type="password"
                 autoComplete="current-password"
+                placeholder="••••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
-            {error && <p className="text-sm text-red-600">{error}</p>}
-            <Button type="submit" className="w-full" disabled={loading}>
+            {error && <p className="text-[13px] text-brand-600">{error}</p>}
+            <Button type="submit" size="lg" className="mt-3 w-full" disabled={loading}>
               {loading && <Spinner className="h-5 w-5" />}
-              Sign in
+              Sign in to Admin Portal
             </Button>
           </form>
-        </CardBody>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

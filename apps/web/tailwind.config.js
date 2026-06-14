@@ -4,22 +4,62 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Bantay Biñan brand — civic blue + accountable green.
         brand: {
-          50: "#eef6ff",
-          100: "#d9ebff",
-          200: "#bcdcff",
-          300: "#8ec6ff",
-          400: "#59a5ff",
-          500: "#3382fb",
-          600: "#1d62f0",
-          700: "#164ddc",
-          800: "#183fb2",
-          900: "#19398c",
+          50:  "#FEF2F2",
+          100: "#FEE2E2",
+          200: "#FECACA",
+          300: "#FCA5A5",
+          400: "#FECACA",
+          500: "#DC2626",
+          600: "#991B1B",
+          700: "#B91C1C",
+          800: "#7F1D1D",
+          900: "#450A0A",
+        },
+        forest: {
+          900: "#0F2E18",
+          800: "#163D24",
+          700: "#06280e",
+          600: "#1A7530",
+        },
+        gold: {
+          400: "#fad018",
+          500: "#D4A800",
+          600: "#F5C842",
         },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans:  ["IBM Plex Sans",  "system-ui", "sans-serif"],
+        serif: ["IBM Plex Serif", "Georgia",   "serif"],
+        mono:  ["IBM Plex Mono",  "ui-monospace", "monospace"],
+      },
+      borderRadius: {
+        sm:    "2px",
+        DEFAULT: "3px",
+        md:    "4px",
+        lg:    "6px",
+        xl:    "8px",
+        "2xl": "12px",
+        full:  "9999px",
+      },
+      animation: {
+        "fade-in-up": "fadeInUp 0.55s ease-out both",
+        "fade-in":    "fadeIn 0.4s ease-out both",
+        "slide-up":   "slideUp 0.4s ease-out both",
+      },
+      keyframes: {
+        fadeInUp: {
+          "0%":   { opacity: "0", transform: "translateY(28px)" },
+          "100%": { opacity: "1", transform: "translateY(0)"    },
+        },
+        fadeIn: {
+          "0%":   { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        slideUp: {
+          "0%":   { opacity: "0", transform: "translateY(12px)" },
+          "100%": { opacity: "1", transform: "translateY(0)"    },
+        },
       },
     },
   },

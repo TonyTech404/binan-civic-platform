@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#163D24">
+  <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+    <rect width="400" height="260" fill="#163D24"/>
+    <rect width="400" height="6" fill="#991B1B"/>
+    <rect x="0" y="6" width="400" height="46" fill="white"/>
+    <circle cx="38" cy="29" r="15" fill="#1A7530"/>
+    <circle cx="38" cy="29" r="10" fill="white"/>
+    <circle cx="38" cy="29" r="4" fill="#D4A800"/>
+    <rect x="60" y="22" width="72" height="7" rx="2" fill="#0F172A" opacity="0.75"/>
+    <rect x="60" y="33" width="44" height="4" rx="1" fill="#94A3B8" opacity="0.6"/>
+    <rect x="0" y="52" width="400" height="110" fill="#163D24"/>
+    <rect x="28" y="72" width="148" height="14" rx="2" fill="white" opacity="0.9"/>
+    <rect x="28" y="92" width="164" height="14" rx="2" fill="white" opacity="0.9"/>
+    <rect x="28" y="112" width="100" height="14" rx="2" fill="#F5C842" opacity="0.95"/>
+    <rect x="220" y="62" width="156" height="88" rx="4" fill="white" opacity="0.08"/>
+    <rect x="232" y="74" width="56" height="30" rx="2" fill="white" opacity="0.12"/>
+    <rect x="304" y="74" width="56" height="30" rx="2" fill="white" opacity="0.12"/>
+    <rect x="232" y="112" width="56" height="30" rx="2" fill="white" opacity="0.12"/>
+    <rect x="304" y="112" width="56" height="30" rx="2" fill="white" opacity="0.12"/>
+    <rect x="0" y="162" width="400" height="98" fill="white"/>
+    <rect x="28" y="174" width="160" height="8" rx="2" fill="#0F172A" opacity="0.4"/>
+    <rect x="28" y="190" width="76" height="56" rx="3" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+    <rect x="112" y="190" width="76" height="56" rx="3" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+    <rect x="196" y="190" width="76" height="56" rx="3" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+    <rect x="280" y="190" width="76" height="56" rx="3" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+    <circle cx="66" cy="218" r="8" fill="#E2E8F0"/>
+    <circle cx="150" cy="218" r="8" fill="#E2E8F0"/>
+    <circle cx="234" cy="218" r="8" fill="#E2E8F0"/>
+    <circle cx="318" cy="218" r="8" fill="#FECACA"/>
+    <rect x="28" y="6" width="4" height="6" fill="#991B1B"/>
+  </svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.447.0/dist/umd/lucide.min.js"></script>
+  <script src="seal-uri.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; }
+    a { text-decoration: none; color: inherit; }
+  </style>
+</helmet>
+
+<div style="font-family: 'IBM Plex Sans', system-ui, sans-serif; background: #D8D4CC; min-height: 100vh; padding: 52px 48px; color: #0F172A;">
+
+  <!-- ── GUIDE HEADER ─────────────────────────────────── -->
+  <div style="max-width: 1440px; margin: 0 auto 56px auto;">
+    <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 8px;">
+      <div>
+        <span style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 24px; font-weight: 700; color: #0F172A; letter-spacing: -0.02em;">Bantay Biñan</span>
+        <span style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 24px; font-weight: 400; color: #64748B; letter-spacing: -0.02em;"> — UI Redesign</span>
+      </div>
+      <div style="flex: 1; height: 1px; background: #BCB9B0;"></div>
+      <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #991B1B; text-transform: uppercase;">Government Civic System</span>
+    </div>
+    <p style="font-size: 13px; color: #78746C; line-height: 1.6; margin: 0;">IBM Plex type family · Charcoal &amp; Red · 3–4 px radius · No gradients · City seal integrated · Forest Green #163D24 (seal ring) · Gold #F5C842 (Philippine sun)</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 01  DESIGN TOKENS                                  -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div style="max-width: 1440px; margin: 0 auto 72px auto;">
+    <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: #78746C; text-transform: uppercase; margin-bottom: 16px;">01 — Design Tokens</div>
+
+    <!-- Colors -->
+    <div style="background: white; border-radius: 4px; padding: 32px; margin-bottom: 2px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #94A3B8; text-transform: uppercase; margin-bottom: 20px;">Color Palette</div>
+      <div style="display: flex; gap: 6px; align-items: flex-end; flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 48px; background: #0F172A; border-radius: 3px;"></div><span style="font-size: 9px; color: #94A3B8; text-align: center; font-family: 'IBM Plex Mono', monospace;">900</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 48px; background: #1E293B; border-radius: 3px;"></div><span style="font-size: 9px; color: #94A3B8; text-align: center; font-family: 'IBM Plex Mono', monospace;">800</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 48px; background: #334155; border-radius: 3px;"></div><span style="font-size: 9px; color: #94A3B8; text-align: center; font-family: 'IBM Plex Mono', monospace;">700</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 48px; background: #475569; border-radius: 3px;"></div><span style="font-size: 9px; color: #94A3B8; text-align: center; font-family: 'IBM Plex Mono', monospace;">600</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 48px; background: #64748B; border-radius: 3px;"></div><span style="font-size: 9px; color: #94A3B8; text-align: center; font-family: 'IBM Plex Mono', monospace;">500</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 48px; background: #94A3B8; border-radius: 3px;"></div><span style="font-size: 9px; color: #94A3B8; text-align: center; font-family: 'IBM Plex Mono', monospace;">400</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 48px; background: #CBD5E1; border-radius: 3px;"></div><span style="font-size: 9px; color: #94A3B8; text-align: center; font-family: 'IBM Plex Mono', monospace;">300</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 48px; background: #E2E8F0; border-radius: 3px; border: 1px solid #CBD5E1;"></div><span style="font-size: 9px; color: #94A3B8; text-align: center; font-family: 'IBM Plex Mono', monospace;">200</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 48px; background: #F8FAFC; border-radius: 3px; border: 1px solid #E2E8F0;"></div><span style="font-size: 9px; color: #94A3B8; text-align: center; font-family: 'IBM Plex Mono', monospace;">50</span></div>
+        <div style="width: 24px;"></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 48px; background: #7F1D1D; border-radius: 3px;"></div><span style="font-size: 9px; color: #94A3B8; text-align: center; font-family: 'IBM Plex Mono', monospace;">Red 900</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative;"><div style="width: 48px; height: 48px; background: #991B1B; border-radius: 3px;"></div><span style="font-size: 9px; color: #991B1B; text-align: center; font-family: 'IBM Plex Mono', monospace; font-weight: 700;">800 ★</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 48px; background: #FEE2E2; border-radius: 3px; border: 1px solid #FECACA;"></div><span style="font-size: 9px; color: #94A3B8; text-align: center; font-family: 'IBM Plex Mono', monospace;">Red 100</span></div>
+        <div style="width: 24px;"></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 36px; background: #F1F5F9; border-radius: 3px; border: 1px solid #CBD5E1; display: flex; align-items: center; justify-content: center;"><span style="font-size: 8px; font-weight: 700; color: #475569; letter-spacing: 0.05em; font-family: 'IBM Plex Mono', monospace;">OPEN</span></div><span style="font-size: 9px; color: #94A3B8; font-family: 'IBM Plex Mono', monospace;">Open</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 48px; height: 36px; background: #FFFBEB; border-radius: 3px; border: 1px solid #FCD34D; display: flex; align-items: center; justify-content: center;"><span style="font-size: 8px; font-weight: 700; color: #92400E; letter-spacing: 0.05em; font-family: 'IBM Plex Mono', monospace;">ASGN</span></div><span style="font-size: 9px; color: #94A3B8; font-family: 'IBM Plex Mono', monospace;">Assigned</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 56px; height: 36px; background: #EFF6FF; border-radius: 3px; border: 1px solid #BFDBFE; display: flex; align-items: center; justify-content: center;"><span style="font-size: 7px; font-weight: 700; color: #1E40AF; letter-spacing: 0.05em; font-family: 'IBM Plex Mono', monospace;">IN PROG</span></div><span style="font-size: 9px; color: #94A3B8; font-family: 'IBM Plex Mono', monospace; text-align: center;">In Progress</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;"><div style="width: 56px; height: 36px; background: #F0FDF4; border-radius: 3px; border: 1px solid #86EFAC; display: flex; align-items: center; justify-content: center;"><span style="font-size: 7px; font-weight: 700; color: #15803D; letter-spacing: 0.05em; font-family: 'IBM Plex Mono', monospace;">RESOLVED</span></div><span style="font-size: 9px; color: #94A3B8; font-family: 'IBM Plex Mono', monospace;">Resolved</span></div>
+      </div>
+    </div>
+
+    <!-- Type + Components -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px;">
+      <!-- Type specimens -->
+      <div style="background: white; border-radius: 0 0 0 4px; padding: 32px;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #94A3B8; text-transform: uppercase; margin-bottom: 24px;">Typography — IBM Plex</div>
+        <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #F1F5F9;">
+          <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 44px; font-weight: 700; color: #0F172A; line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 5px;">Display / H1</div>
+          <div style="font-size: 10px; color: #94A3B8; font-family: 'IBM Plex Mono', monospace;">Serif · 700 · 44px · ls -0.025em</div>
+        </div>
+        <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #F1F5F9;">
+          <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 22px; font-weight: 600; color: #0F172A; line-height: 1.3; margin-bottom: 5px;">Section Heading / H2</div>
+          <div style="font-size: 10px; color: #94A3B8; font-family: 'IBM Plex Mono', monospace;">Serif · 600 · 22px</div>
+        </div>
+        <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #F1F5F9;">
+          <div style="font-size: 15px; font-weight: 400; color: #334155; line-height: 1.65; margin-bottom: 5px;">Body — Reports are routed to the responsible city office and tracked to resolution.</div>
+          <div style="font-size: 10px; color: #94A3B8; font-family: 'IBM Plex Mono', monospace;">Sans · 400 · 15px · lh 1.65</div>
+        </div>
+        <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #F1F5F9;">
+          <div style="font-size: 12px; font-weight: 400; color: #64748B; line-height: 1.5; margin-bottom: 5px;">Caption — Reference: BB-2026-000198 · Submitted June 12, 2026</div>
+          <div style="font-size: 10px; color: #94A3B8; font-family: 'IBM Plex Mono', monospace;">Sans · 400 · 12px</div>
+        </div>
+        <div>
+          <div style="font-size: 10px; font-weight: 700; color: #64748B; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 5px;">Label / Overline</div>
+          <div style="font-size: 10px; color: #94A3B8; font-family: 'IBM Plex Mono', monospace;">Sans · 700 · 10px · Uppercase · ls 0.14em</div>
+        </div>
+      </div>
+
+      <!-- Components -->
+      <div style="background: white; border-radius: 0 0 4px 0; padding: 32px;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #94A3B8; text-transform: uppercase; margin-bottom: 24px;">Components</div>
+
+        <!-- Buttons -->
+        <div style="margin-bottom: 24px;">
+          <div style="font-size: 10px; font-weight: 600; color: #CBD5E1; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;">Buttons</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+            <button style="background: #991B1B; color: white; border: none; padding: 0 20px; height: 40px; font-size: 13px; font-weight: 600; font-family: 'IBM Plex Sans', sans-serif; border-radius: 3px; cursor: pointer; white-space: nowrap;">Submit report</button>
+            <button style="background: #0F172A; color: white; border: none; padding: 0 20px; height: 40px; font-size: 13px; font-weight: 600; font-family: 'IBM Plex Sans', sans-serif; border-radius: 3px; cursor: pointer; white-space: nowrap;">Secondary</button>
+            <button style="background: white; color: #334155; border: 1px solid #CBD5E1; padding: 0 20px; height: 40px; font-size: 13px; font-weight: 500; font-family: 'IBM Plex Sans', sans-serif; border-radius: 3px; cursor: pointer; white-space: nowrap;">Outline</button>
+            <button style="background: white; color: #DC2626; border: 1px solid #FECACA; padding: 0 20px; height: 40px; font-size: 13px; font-weight: 500; font-family: 'IBM Plex Sans', sans-serif; border-radius: 3px; cursor: pointer; white-space: nowrap;">Danger</button>
+          </div>
+        </div>
+
+        <!-- Status badges -->
+        <div style="margin-bottom: 24px;">
+          <div style="font-size: 10px; font-weight: 600; color: #CBD5E1; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;">Status Badges</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+            <span style="display: inline-flex; align-items: center; gap: 5px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #475569; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #94A3B8; flex-shrink: 0;"></span>Open</span>
+            <span style="display: inline-flex; align-items: center; gap: 5px; background: #FFFBEB; border: 1px solid #FCD34D; color: #92400E; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #F59E0B; flex-shrink: 0;"></span>Assigned</span>
+            <span style="display: inline-flex; align-items: center; gap: 5px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #3B82F6; flex-shrink: 0;"></span>In Progress</span>
+            <span style="display: inline-flex; align-items: center; gap: 5px; background: #F0FDF4; border: 1px solid #86EFAC; color: #15803D; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #22C55E; flex-shrink: 0;"></span>Resolved</span>
+          </div>
+        </div>
+
+        <!-- Inputs -->
+        <div style="margin-bottom: 24px;">
+          <div style="font-size: 10px; font-weight: 600; color: #CBD5E1; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;">Form Elements</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <input placeholder="Default: 1px border, 3px radius, 40px tall" style="width: 100%; height: 40px; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 12px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #0F172A; background: white; outline: none;" readonly="">
+            <input value="Focused: red border + soft ring" style="width: 100%; height: 40px; border: 1px solid #991B1B; border-radius: 3px; padding: 0 12px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #0F172A; background: white; outline: none; box-shadow: 0 0 0 3px rgba(153,27,27,0.08);" readonly="">
+            <select style="width: 100%; height: 40px; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 12px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #64748B; background: white; outline: none;"><option>Select barangay…</option></select>
+          </div>
+        </div>
+
+        <!-- Cards -->
+        <div>
+          <div style="font-size: 10px; font-weight: 600; color: #CBD5E1; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;">Card</div>
+          <div style="border: 1px solid #E2E8F0; border-radius: 4px; background: white; padding: 16px; display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border: 1px solid #E2E8F0; border-radius: 3px; background: #F8FAFC; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="construction" style="width: 16px; height: 16px; color: #64748B;"></i></div>
+            <div><div style="font-size: 13px; font-weight: 600; color: #0F172A; margin-bottom: 2px;">Card Title</div><div style="font-size: 12px; color: #64748B;">White · 1px border #E2E8F0 · 4px radius</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 02  PUBLIC — HOME PAGE                             -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div style="max-width: 1440px; margin: 0 auto 72px auto;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+      <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: #991B1B; text-transform: uppercase;">Public</span>
+      <span style="width: 4px; height: 4px; border-radius: 50%; background: #B8B4AA; flex-shrink: 0;"></span>
+      <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.12em; color: #78746C; text-transform: uppercase;">Home Page</span>
+      <div style="flex: 1; height: 1px; background: #C8C4BB;"></div>
+    </div>
+    <div style="border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
+
+      <!-- NAV -->
+      <div style="height: 4px; background: #991B1B;"></div>
+      <nav style="background: white; border-bottom: 1px solid #E2E8F0;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 68px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="width:42px;height:42px;border-radius:50%;background:#1A7530;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 1.5px #D4A800;"><div style="width:29px;height:29px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;"><div style="width:9px;height:9px;border-radius:50%;background:#D4A800;box-shadow:0 0 0 3px rgba(212,168,0,0.2);"></div></div></div>
+            <div>
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 16px; font-weight: 700; color: #0F172A; letter-spacing: -0.01em; line-height: 1.2;">BANTAY BIÑAN</div>
+              <div style="font-size: 10px; font-weight: 500; color: #94A3B8; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.2;">City Government of Biñan</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 2px;">
+            <a style="font-size: 13px; font-weight: 500; color: #475569; padding: 8px 16px; cursor: pointer; border-radius: 2px;">Report</a>
+            <a style="font-size: 13px; font-weight: 500; color: #475569; padding: 8px 16px; cursor: pointer; border-radius: 2px;">Track</a>
+            <a style="font-size: 13px; font-weight: 500; color: #475569; padding: 8px 16px; cursor: pointer; border-radius: 2px;">Hotlines</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- HERO -->
+      <section style="padding: 80px 40px; background-color: #06280e">
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+          <div>
+            <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 28px;">
+              <div style="width: 6px; height: 6px; background: #991B1B; border-radius: 50%; flex-shrink: 0;"></div>
+              <span style="font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.55); letter-spacing: 0.1em; text-transform: uppercase;">Official Community Issue Reporting</span>
+            </div>
+            <h1 style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 58px; font-weight: 700; color: #F8FAFC; line-height: 1.08; margin: 0 0 24px 0; letter-spacing: -0.025em;">
+              See it.<br>Report it.<br><em style="color: #fad018; font-style: italic">Fix it.</em>
+            </h1>
+            <p style="font-size: 16px; color: rgba(255,255,255,0.82); line-height: 1.7; margin: 0 0 40px 0; max-width: 400px;">
+              Report potholes, flooding, broken streetlights, and other community issues directly to the right city office — and track the fix from start to finish.
+            </p>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <button style="background: #991B1B; color: white; border: none; padding: 0 28px; height: 52px; font-size: 14px; font-weight: 600; font-family: 'IBM Plex Sans', sans-serif; border-radius: 3px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; letter-spacing: 0.01em;">Report an issue <span style="font-size: 16px;">→</span></button>
+              <button style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); padding: 0 24px; height: 52px; font-size: 14px; font-weight: 500; font-family: 'IBM Plex Sans', sans-serif; border-radius: 3px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;"><i data-lucide="search" style="width: 15px; height: 15px; color: rgba(255,255,255,0.7);"></i>Track a report</button>
+            </div>
+          </div>
+          <!-- Stats panel -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden;">
+            <div style="padding: 28px 24px; background-color: #ffffff08">
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 52px; font-weight: 700; color: #fad018; line-height: 1; margin-bottom: 8px">156</div>
+              <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Issues resolved</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); padding: 28px 24px;">
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 52px; font-weight: 700; color: #fad018; line-height: 1; margin-bottom: 8px">23</div>
+              <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Active reports</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); padding: 28px 24px;">
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 52px; font-weight: 700; color: #fad018; line-height: 1; margin-bottom: 8px">24</div>
+              <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Barangays covered</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); padding: 28px 24px;">
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 52px; font-weight: 700; color: #fad018; line-height: 1; margin-bottom: 8px">&lt;48h</div>
+              <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Avg. response</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section style="background: #F8FAFC; border-top: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0; padding: 60px 40px;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+          <div style="font-size: 10px; font-weight: 700; color: #991B1B; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 44px;">How It Works</div>
+          <div style="display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr; align-items: start; gap: 0;">
+            <div>
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 52px; font-weight: 700; color: #fad018; line-height: 1; margin-bottom: 14px">01</div>
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 17px; font-weight: 600; color: #0F172A; margin-bottom: 8px;">Pin the location</div>
+              <p style="font-size: 14px; color: #64748B; line-height: 1.65; margin: 0;">Snap a photo and drop a pin where the problem is. No account needed.</p>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center; height: 68px;"><div style="width: 100%; height: 1px; position: relative; background-color: #991b1b"><div style="position: absolute; right: -3px; top: -3px; width: 7px; height: 7px; border-top: 1px solid #CBD5E1; border-right: 1px solid #CBD5E1; transform: rotate(45deg); border-color: #9a1b1b"></div></div></div>
+            <div>
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 52px; font-weight: 700; color: #fad018; line-height: 1; margin-bottom: 14px">02</div>
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 17px; font-weight: 600; color: #0F172A; margin-bottom: 8px;">We route it</div>
+              <p style="font-size: 14px; color: #64748B; line-height: 1.65; margin: 0;">Your report goes straight to the responsible city office. Automatically.</p>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center; height: 68px;"><div style="width: 100%; height: 1px; position: relative; background-color: #991b1b"><div style="position: absolute; right: -3px; top: -3px; width: 7px; height: 7px; border-top: 1px solid #CBD5E1; border-right: 1px solid #CBD5E1; transform: rotate(45deg); border-color: #991b1b"></div></div></div>
+            <div>
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 52px; font-weight: 700; color: #fad018; line-height: 1; margin-bottom: 14px">03</div>
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 17px; font-weight: 600; color: #0F172A; margin-bottom: 8px;">Track the fix</div>
+              <p style="font-size: 14px; color: #64748B; line-height: 1.65; margin: 0;">Follow progress and see before-and-after proof when it's resolved.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CATEGORIES -->
+      <section style="background: white; padding: 60px 40px;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+          <div style="margin-bottom: 28px;">
+            <div style="font-size: 10px; font-weight: 700; color: #991B1B; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 8px;">What Can You Report?</div>
+            <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 20px; font-weight: 600; color: #0F172A;">Select a category to get started</div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #E2E8F0; border: 1px solid #E2E8F0; border-radius: 4px; overflow: hidden;">
+            <div style="background: white; padding: 18px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer;"><div style="width: 32px; height: 32px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="construction" style="width: 15px; height: 15px; color: #64748B;"></i></div><div><div style="font-size: 13px; font-weight: 500; color: #334155; line-height: 1.3;">Road Damage</div></div></div>
+            <div style="background: white; padding: 18px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer;"><div style="width: 32px; height: 32px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="lightbulb" style="width: 15px; height: 15px; color: #64748B;"></i></div><div><div style="font-size: 13px; font-weight: 500; color: #334155; line-height: 1.3;">Streetlight Issues</div></div></div>
+            <div style="background: white; padding: 18px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer;"><div style="width: 32px; height: 32px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="waves" style="width: 15px; height: 15px; color: #64748B;"></i></div><div><div style="font-size: 13px; font-weight: 500; color: #334155; line-height: 1.3;">Flooding</div></div></div>
+            <div style="background: white; padding: 18px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer;"><div style="width: 32px; height: 32px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="droplets" style="width: 15px; height: 15px; color: #64748B;"></i></div><div><div style="font-size: 13px; font-weight: 500; color: #334155; line-height: 1.3;">Blocked Drainage</div></div></div>
+            <div style="background: white; padding: 18px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer;"><div style="width: 32px; height: 32px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="trash-2" style="width: 15px; height: 15px; color: #64748B;"></i></div><div><div style="font-size: 13px; font-weight: 500; color: #334155; line-height: 1.3;">Garbage Collection</div></div></div>
+            <div style="background: white; padding: 18px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer;"><div style="width: 32px; height: 32px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="tree-pine" style="width: 15px; height: 15px; color: #64748B;"></i></div><div><div style="font-size: 13px; font-weight: 500; color: #334155; line-height: 1.3;">Fallen Trees</div></div></div>
+            <div style="background: white; padding: 18px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer;"><div style="width: 32px; height: 32px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="shield-alert" style="width: 15px; height: 15px; color: #64748B;"></i></div><div><div style="font-size: 13px; font-weight: 500; color: #334155; line-height: 1.3;">Public Safety</div></div></div>
+            <div style="background: white; padding: 18px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer;"><div style="width: 32px; height: 32px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="circle-help" style="width: 15px; height: 15px; color: #64748B;"></i></div><div><div style="font-size: 13px; font-weight: 500; color: #334155; line-height: 1.3;">Other</div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer style="background: #0F2E18; border-top: 1px solid #991B1B; padding: 36px 40px;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#1A7530;display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:0.65;box-shadow:0 0 0 1.5px #D4A800;"><div style="width:25px;height:25px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;"><div style="width:7px;height:7px;border-radius:50%;background:#D4A800;"></div></div></div>
+            <div>
+              <div style="font-size: 13px; font-weight: 600; color: #ffffff; margin-bottom: 2px">© 2026 City Government of Biñan, Laguna</div>
+              <div style="font-size: 11px; color: #ffffff">BANTAY BIÑAN is an official service. All rights reserved.</div>
+            </div>
+          </div>
+          <a style="font-size: 12px; color: #ffffff; cursor: pointer">Government staff portal →</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 03  PUBLIC — SUBMIT REPORT                         -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div style="max-width: 1440px; margin: 0 auto 72px auto;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+      <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: #991B1B; text-transform: uppercase;">Public</span>
+      <span style="width: 4px; height: 4px; border-radius: 50%; background: #B8B4AA; flex-shrink: 0;"></span>
+      <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.12em; color: #78746C; text-transform: uppercase;">Submit Report</span>
+      <div style="flex: 1; height: 1px; background: #C8C4BB;"></div>
+    </div>
+    <div style="border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
+      <div style="height: 4px; background: #991B1B;"></div>
+      <nav style="background: white; border-bottom: 1px solid #E2E8F0;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 68px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 14px;"><div style="width:42px;height:42px;border-radius:50%;background:#1A7530;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 1.5px #D4A800;"><div style="width:29px;height:29px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;"><div style="width:9px;height:9px;border-radius:50%;background:#D4A800;box-shadow:0 0 0 3px rgba(212,168,0,0.2);"></div></div></div><div><div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 16px; font-weight: 700; color: #0F172A; letter-spacing: -0.01em;">BANTAY BIÑAN</div><div style="font-size: 10px; font-weight: 500; color: #94A3B8; letter-spacing: 0.08em; text-transform: uppercase;">City Government of Biñan</div></div></div>
+          <div style="display: flex; align-items: center; gap: 2px;"><a style="font-size: 13px; font-weight: 700; color: #991B1B; padding: 8px 16px; cursor: pointer; border-bottom: 2px solid #991B1B;">Report</a><a style="font-size: 13px; font-weight: 500; color: #475569; padding: 8px 16px; cursor: pointer;">Track</a><a style="font-size: 13px; font-weight: 500; color: #475569; padding: 8px 16px; cursor: pointer;">Hotlines</a></div>
+        </div>
+      </nav>
+
+      <div style="background: #F8FAFC; padding: 48px 40px;">
+        <div style="max-width: 760px; margin: 0 auto;">
+          <div style="margin-bottom: 32px;">
+            <h1 style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 28px; font-weight: 700; color: #0F172A; margin: 0 0 6px 0; letter-spacing: -0.01em;">Report an Issue</h1>
+            <p style="font-size: 14px; color: #64748B; margin: 0;">Takes under a minute. No account needed. Your reference number is emailed or shown on screen.</p>
+          </div>
+
+          <!-- Category picker -->
+          <div style="margin-bottom: 24px;">
+            <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 10px;">Category</label>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #E2E8F0; border: 1px solid #E2E8F0; border-radius: 3px; overflow: hidden;">
+              <!-- selected -->
+              <div style="background: #FEF2F2; padding: 14px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer; border-left: 3px solid #991B1B;"><div style="width: 28px; height: 28px; background: #FEE2E2; border: 1px solid #FECACA; border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="construction" style="width: 14px; height: 14px; color: #991B1B;"></i></div><span style="font-size: 12px; font-weight: 600; color: #991B1B; line-height: 1.3;">Road Damage</span></div>
+              <div style="background: white; padding: 14px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer;"><div style="width: 28px; height: 28px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="lightbulb" style="width: 14px; height: 14px; color: #64748B;"></i></div><span style="font-size: 12px; font-weight: 500; color: #475569; line-height: 1.3;">Streetlight Issues</span></div>
+              <div style="background: white; padding: 14px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer;"><div style="width: 28px; height: 28px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="waves" style="width: 14px; height: 14px; color: #64748B;"></i></div><span style="font-size: 12px; font-weight: 500; color: #475569; line-height: 1.3;">Flooding</span></div>
+              <div style="background: white; padding: 14px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer;"><div style="width: 28px; height: 28px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="droplets" style="width: 14px; height: 14px; color: #64748B;"></i></div><span style="font-size: 12px; font-weight: 500; color: #475569; line-height: 1.3;">Blocked Drainage</span></div>
+              <div style="background: white; padding: 14px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer;"><div style="width: 28px; height: 28px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="trash-2" style="width: 14px; height: 14px; color: #64748B;"></i></div><span style="font-size: 12px; font-weight: 500; color: #475569; line-height: 1.3;">Garbage Collection</span></div>
+              <div style="background: white; padding: 14px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer;"><div style="width: 28px; height: 28px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="tree-pine" style="width: 14px; height: 14px; color: #64748B;"></i></div><span style="font-size: 12px; font-weight: 500; color: #475569; line-height: 1.3;">Fallen Trees</span></div>
+              <div style="background: white; padding: 14px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer;"><div style="width: 28px; height: 28px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="shield-alert" style="width: 14px; height: 14px; color: #64748B;"></i></div><span style="font-size: 12px; font-weight: 500; color: #475569; line-height: 1.3;">Public Safety</span></div>
+              <div style="background: white; padding: 14px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer;"><div style="width: 28px; height: 28px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="circle-help" style="width: 14px; height: 14px; color: #64748B;"></i></div><span style="font-size: 12px; font-weight: 500; color: #475569; line-height: 1.3;">Other</span></div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div style="margin-bottom: 20px; background: white; border: 1px solid #E2E8F0; border-radius: 3px; padding: 20px 20px 0 20px;">
+            <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 10px;">Describe the Issue</label>
+            <textarea placeholder="e.g. Large pothole in the middle of the road, about 30cm wide. Hard to see at night and has caused two flat tires this week." rows="4" style="width: 100%; border: none; outline: none; resize: none; font-size: 14px; font-family: 'IBM Plex Sans', sans-serif; color: #334155; line-height: 1.6; padding-bottom: 16px; background: transparent;" readonly=""></textarea>
+          </div>
+
+          <!-- Photo + Location row -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+            <div>
+              <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 10px;">Photo <span style="font-weight: 400; color: #94A3B8; text-transform: none; letter-spacing: 0;">(optional)</span></label>
+              <div style="border: 1px dashed #CBD5E1; border-radius: 3px; height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: white; cursor: pointer;">
+                <i data-lucide="camera" style="width: 22px; height: 22px; color: #94A3B8;"></i>
+                <span style="font-size: 13px; color: #94A3B8; font-weight: 500;">Take or upload a photo</span>
+                <span style="font-size: 11px; color: #CBD5E1;">Max 8 MB</span>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase;">Location</label>
+                <button style="font-size: 12px; font-weight: 500; color: #475569; background: white; border: 1px solid #E2E8F0; padding: 4px 12px; border-radius: 2px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-family: 'IBM Plex Sans', sans-serif;"><i data-lucide="crosshair" style="width: 12px; height: 12px; color: #64748B;"></i>Use GPS</button>
+              </div>
+              <div style="height: 120px; background-color: #F1F5F9; background-image: linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px); background-size: 28px 28px; border-radius: 3px; border: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: center; position: relative;">
+                <svg width="24" height="32" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12C0 21 12 32 12 32C12 32 24 21 24 12C24 5.37 18.63 0 12 0ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17Z" fill="#991B1B"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Barangay + landmark -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+            <div>
+              <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 10px;">Barangay</label>
+              <select style="width: 100%; height: 40px; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 12px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #0F172A; background: white; outline: none;"><option>San Antonio</option></select>
+            </div>
+            <div>
+              <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 10px;">Nearest Landmark <span style="font-weight: 400; color: #94A3B8; text-transform: none; letter-spacing: 0;">(optional)</span></label>
+              <input placeholder="e.g. beside the public market" style="width: 100%; height: 40px; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 12px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #334155; background: white; outline: none;" readonly="">
+            </div>
+          </div>
+
+          <!-- Contact -->
+          <div style="margin-bottom: 28px;">
+            <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 10px;">Your Contact <span style="font-weight: 400; color: #94A3B8; text-transform: none; letter-spacing: 0;">(optional — if the office needs to follow up)</span></label>
+            <input placeholder="Phone number or email address" style="width: 100%; height: 40px; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 12px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #334155; background: white; outline: none;" readonly="">
+          </div>
+
+          <button style="width: 100%; height: 52px; background: #991B1B; color: white; border: none; border-radius: 3px; font-size: 15px; font-weight: 600; font-family: 'IBM Plex Sans', sans-serif; cursor: pointer; letter-spacing: 0.01em;">Submit Report</button>
+          <p style="font-size: 11px; color: #94A3B8; text-align: center; margin-top: 12px;">You will receive a reference number to track your report's progress.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 04  PUBLIC — TRACK REPORT                          -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div style="max-width: 1440px; margin: 0 auto 72px auto;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+      <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: #991B1B; text-transform: uppercase;">Public</span>
+      <span style="width: 4px; height: 4px; border-radius: 50%; background: #B8B4AA; flex-shrink: 0;"></span>
+      <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.12em; color: #78746C; text-transform: uppercase;">Track Report</span>
+      <div style="flex: 1; height: 1px; background: #C8C4BB;"></div>
+    </div>
+    <div style="border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
+      <div style="height: 4px; background: #991B1B;"></div>
+      <nav style="background: white; border-bottom: 1px solid #E2E8F0;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 68px; display: flex; align-items: center; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 14px;"><div style="width:42px;height:42px;border-radius:50%;background:#1A7530;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 1.5px #D4A800;"><div style="width:29px;height:29px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;"><div style="width:9px;height:9px;border-radius:50%;background:#D4A800;box-shadow:0 0 0 3px rgba(212,168,0,0.2);"></div></div></div><div><div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 16px; font-weight: 700; color: #0F172A; letter-spacing: -0.01em;">BANTAY BIÑAN</div><div style="font-size: 10px; color: #94A3B8; letter-spacing: 0.08em; text-transform: uppercase;">City Government of Biñan</div></div></div><div style="display: flex; gap: 2px;"><a style="font-size: 13px; color: #475569; padding: 8px 16px;">Report</a><a style="font-size: 13px; font-weight: 700; color: #991B1B; padding: 8px 16px; border-bottom: 2px solid #991B1B;">Track</a><a style="font-size: 13px; color: #475569; padding: 8px 16px;">Hotlines</a></div></div>
+      </nav>
+      <div style="background: #F8FAFC; padding: 48px 40px;">
+        <div style="max-width: 760px; margin: 0 auto;">
+          <h1 style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 26px; font-weight: 700; color: #0F172A; margin: 0 0 6px 0; letter-spacing: -0.01em;">Track a Report</h1>
+          <p style="font-size: 14px; color: #64748B; margin: 0 0 24px 0;">Enter the reference number you received when you submitted your report.</p>
+          <div style="display: flex; gap: 10px; margin-bottom: 32px;">
+            <input value="BB-2026-000198" style="flex: 1; height: 44px; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 14px; font-size: 15px; font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #0F172A; background: white; outline: none; text-transform: uppercase; letter-spacing: 0.04em;" readonly="">
+            <button style="background: #991B1B; color: white; border: none; padding: 0 24px; height: 44px; font-size: 14px; font-weight: 600; font-family: 'IBM Plex Sans', sans-serif; border-radius: 3px; cursor: pointer; display: flex; align-items: center; gap: 8px; white-space: nowrap;"><i data-lucide="search" style="width: 14px; height: 14px; color: white;"></i>Track</button>
+          </div>
+
+          <!-- Result card -->
+          <div style="border: 1px solid #E2E8F0; border-radius: 4px; background: white; margin-bottom: 16px; overflow: hidden;">
+            <div style="padding: 20px 24px; border-bottom: 1px solid #F1F5F9; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <div style="width: 40px; height: 40px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="construction" style="width: 18px; height: 18px; color: #64748B;"></i></div>
+                <div>
+                  <div style="font-size: 15px; font-weight: 600; color: #0F172A; margin-bottom: 3px;">Road Damage</div>
+                  <div style="font-size: 12px; color: #94A3B8; font-family: 'IBM Plex Mono', monospace;">BB-2026-000198 · San Antonio</div>
+                </div>
+              </div>
+              <span style="display: inline-flex; align-items: center; gap: 5px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #3B82F6; flex-shrink: 0;"></span>In Progress</span>
+            </div>
+            <div style="padding: 20px 24px; border-bottom: 1px solid #F1F5F9;">
+              <p style="font-size: 14px; color: #334155; line-height: 1.6; margin: 0 0 10px 0;">Large pothole near the public market entrance, approximately 30cm wide. Hard to see at night and has caused vehicle damage.</p>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #94A3B8;"><i data-lucide="map-pin" style="width: 12px; height: 12px; color: #94A3B8;"></i>Near public market gate 2 · Submitted June 12, 2026</div>
+            </div>
+            <!-- Timeline -->
+            <div style="padding: 20px 24px;">
+              <div style="font-size: 10px; font-weight: 700; color: #94A3B8; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px;">Progress</div>
+              <div style="display: flex; flex-direction: column; gap: 0;">
+                <div style="display: flex; gap: 16px; align-items: flex-start;">
+                  <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0;"><div style="width: 28px; height: 28px; background: #0F172A; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><span style="font-size: 11px; font-weight: 700; color: white; font-family: 'IBM Plex Mono', monospace;">1</span></div><div style="width: 1px; height: 32px; background: #0F172A;"></div></div>
+                  <div style="padding-bottom: 24px;"><div style="font-size: 13px; font-weight: 600; color: #0F172A; margin-bottom: 2px;">Open</div><div style="font-size: 11px; color: #94A3B8;">June 12, 2026 at 2:14 PM</div></div>
+                </div>
+                <div style="display: flex; gap: 16px; align-items: flex-start;">
+                  <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0;"><div style="width: 28px; height: 28px; background: #0F172A; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><span style="font-size: 11px; font-weight: 700; color: white; font-family: 'IBM Plex Mono', monospace;">2</span></div><div style="width: 1px; height: 32px; background: #0F172A;"></div></div>
+                  <div style="padding-bottom: 24px;"><div style="font-size: 13px; font-weight: 600; color: #0F172A; margin-bottom: 2px;">Assigned</div><div style="font-size: 11px; color: #94A3B8;">June 12, 2026 at 4:30 PM · Engineering Office</div></div>
+                </div>
+                <div style="display: flex; gap: 16px; align-items: flex-start;">
+                  <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0;"><div style="width: 28px; height: 28px; background: #991B1B; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><span style="font-size: 11px; font-weight: 700; color: white; font-family: 'IBM Plex Mono', monospace;">3</span></div><div style="width: 1px; height: 32px; background: #E2E8F0;"></div></div>
+                  <div style="padding-bottom: 24px;"><div style="font-size: 13px; font-weight: 600; color: #991B1B; margin-bottom: 2px;">In Progress</div><div style="font-size: 11px; color: #94A3B8;">June 13, 2026 · Inspection complete. Repair scheduled.</div></div>
+                </div>
+                <div style="display: flex; gap: 16px; align-items: flex-start;">
+                  <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0;"><div style="width: 28px; height: 28px; background: #E2E8F0; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><span style="font-size: 11px; font-weight: 700; color: #94A3B8; font-family: 'IBM Plex Mono', monospace;">4</span></div></div>
+                  <div><div style="font-size: 13px; color: #94A3B8;">Resolved</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 05  PUBLIC — EMERGENCY HOTLINES                    -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div style="max-width: 1440px; margin: 0 auto 72px auto;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+      <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: #991B1B; text-transform: uppercase;">Public</span>
+      <span style="width: 4px; height: 4px; border-radius: 50%; background: #B8B4AA; flex-shrink: 0;"></span>
+      <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.12em; color: #78746C; text-transform: uppercase;">Emergency Hotlines</span>
+      <div style="flex: 1; height: 1px; background: #C8C4BB;"></div>
+    </div>
+    <div style="border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
+      <div style="height: 4px; background: #991B1B;"></div>
+      <nav style="background: white; border-bottom: 1px solid #E2E8F0;"><div style="max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 68px; display: flex; align-items: center; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 14px;"><div style="width:42px;height:42px;border-radius:50%;background:#1A7530;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 1.5px #D4A800;"><div style="width:29px;height:29px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;"><div style="width:9px;height:9px;border-radius:50%;background:#D4A800;box-shadow:0 0 0 3px rgba(212,168,0,0.2);"></div></div></div><div><div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 16px; font-weight: 700; color: #0F172A; letter-spacing: -0.01em;">BANTAY BIÑAN</div><div style="font-size: 10px; color: #94A3B8; letter-spacing: 0.08em; text-transform: uppercase;">City Government of Biñan</div></div></div><div style="display: flex; gap: 2px;"><a style="font-size: 13px; color: #475569; padding: 8px 16px;">Report</a><a style="font-size: 13px; color: #475569; padding: 8px 16px;">Track</a><a style="font-size: 13px; font-weight: 700; color: #991B1B; padding: 8px 16px; border-bottom: 2px solid #991B1B;">Hotlines</a></div></div></nav>
+      <div style="background: #F8FAFC; padding: 48px 40px;">
+        <div style="max-width: 900px; margin: 0 auto;">
+          <h1 style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 26px; font-weight: 700; color: #0F172A; margin: 0 0 8px 0;">Emergency Hotlines</h1>
+          <div style="background: #FEF2F2; border: 1px solid #FECACA; border-left: 3px solid #991B1B; border-radius: 3px; padding: 14px 18px; margin-bottom: 32px; display: flex; align-items: center; gap: 12px;">
+            <i data-lucide="alert-triangle" style="width: 16px; height: 16px; color: #991B1B; flex-shrink: 0;"></i>
+            <p style="font-size: 13px; color: #7F1D1D; margin: 0; line-height: 1.5;">For life-threatening emergencies, call <strong>911</strong> immediately. Bantay Biñan is for non-urgent community issues only.</p>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #E2E8F0; border: 1px solid #E2E8F0; border-radius: 4px; overflow: hidden;">
+            <a href="tel:911" style="background: white; padding: 20px 24px; display: flex; align-items: center; gap: 16px; cursor: pointer;">
+              <div style="width: 40px; height: 40px; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="alert-triangle" style="width: 18px; height: 18px; color: #991B1B;"></i></div>
+              <div><div style="font-size: 14px; font-weight: 600; color: #0F172A; margin-bottom: 3px;">City Emergency Hotline</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 700; color: #991B1B;">911</div></div>
+            </a>
+            <a href="tel:0495114814" style="background: white; padding: 20px 24px; display: flex; align-items: center; gap: 16px; cursor: pointer;">
+              <div style="width: 40px; height: 40px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="building-2" style="width: 18px; height: 18px; color: #64748B;"></i></div>
+              <div><div style="font-size: 14px; font-weight: 600; color: #0F172A; margin-bottom: 3px;">Biñan City Hall</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500; color: #334155;">(049) 511-4814</div></div>
+            </a>
+            <a href="tel:0495119000" style="background: white; padding: 20px 24px; display: flex; align-items: center; gap: 16px; cursor: pointer;">
+              <div style="width: 40px; height: 40px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="cloud-rain" style="width: 18px; height: 18px; color: #64748B;"></i></div>
+              <div><div style="font-size: 14px; font-weight: 600; color: #0F172A; margin-bottom: 3px;">DRRMO Biñan</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500; color: #334155;">(049) 511-9000</div></div>
+            </a>
+            <a href="tel:0495111888" style="background: white; padding: 20px 24px; display: flex; align-items: center; gap: 16px; cursor: pointer;">
+              <div style="width: 40px; height: 40px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="flame" style="width: 18px; height: 18px; color: #64748B;"></i></div>
+              <div><div style="font-size: 14px; font-weight: 600; color: #0F172A; margin-bottom: 3px;">Biñan Fire Station</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500; color: #334155;">(049) 511-1888</div></div>
+            </a>
+            <a href="tel:0495114444" style="background: white; padding: 20px 24px; display: flex; align-items: center; gap: 16px; cursor: pointer;">
+              <div style="width: 40px; height: 40px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="shield" style="width: 18px; height: 18px; color: #64748B;"></i></div>
+              <div><div style="font-size: 14px; font-weight: 600; color: #0F172A; margin-bottom: 3px;">Biñan PNP</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500; color: #334155;">(049) 511-4444</div></div>
+            </a>
+            <a href="tel:0495117777" style="background: white; padding: 20px 24px; display: flex; align-items: center; gap: 16px; cursor: pointer;">
+              <div style="width: 40px; height: 40px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="heart-pulse" style="width: 18px; height: 18px; color: #64748B;"></i></div>
+              <div><div style="font-size: 14px; font-weight: 600; color: #0F172A; margin-bottom: 3px;">Ospital ng Biñan</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500; color: #334155;">(049) 511-7777</div></div>
+            </a>
+          </div>
+          <p style="font-size: 11px; color: #94A3B8; margin-top: 16px;">Confirm numbers against official City of Biñan advisories. Numbers shown are indicative.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 06  ADMIN — LOGIN                                  -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div style="max-width: 1440px; margin: 0 auto 72px auto;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+      <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: #64748B; text-transform: uppercase;">Admin</span>
+      <span style="width: 4px; height: 4px; border-radius: 50%; background: #B8B4AA; flex-shrink: 0;"></span>
+      <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.12em; color: #78746C; text-transform: uppercase;">Login</span>
+      <div style="flex: 1; height: 1px; background: #C8C4BB;"></div>
+    </div>
+    <div style="border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
+      <div style="height: 4px; background: #991B1B;"></div>
+      <div style="background: #F5F4F1; padding: 80px 40px; display: flex; align-items: center; justify-content: center; min-height: 560px;">
+        <div style="width: 100%; max-width: 400px;">
+          <!-- Restricted notice -->
+          <div style="background: #FEF2F2; border-left: 3px solid #991B1B; border-radius: 2px; padding: 10px 14px; margin-bottom: 24px; display: flex; gap: 8px; align-items: flex-start;">
+            <i data-lucide="lock" style="width: 13px; height: 13px; color: #991B1B; flex-shrink: 0; margin-top: 1px;"></i>
+            <div>
+              <div style="font-size: 11px; font-weight: 700; color: #7F1D1D; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px;">Restricted Access</div>
+              <div style="font-size: 11px; color: #7F1D1D; line-height: 1.5;">Authorized City Government of Biñan personnel only.</div>
+            </div>
+          </div>
+          <!-- Card -->
+          <div style="background: white; border: 1px solid #E2E8F0; border-radius: 4px; padding: 36px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 32px;">
+              <div style="width:52px;height:52px;border-radius:50%;background:#1A7530;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 2px #D4A800;"><div style="width:36px;height:36px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;"><div style="width:11px;height:11px;border-radius:50%;background:#D4A800;box-shadow:0 0 0 4px rgba(212,168,0,0.15);"></div></div></div>
+              <div>
+                <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 16px; font-weight: 700; color: #0F172A; letter-spacing: -0.01em;">BANTAY BIÑAN</div>
+                <div style="font-size: 10px; font-weight: 700; color: #991B1B; letter-spacing: 0.1em; text-transform: uppercase;">Admin Portal</div>
+              </div>
+            </div>
+            <div style="margin-bottom: 16px;">
+              <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 8px;">Email Address</label>
+              <input placeholder="staff@binan.gov.ph" style="width: 100%; height: 40px; background: white; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 12px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #334155; outline: none;" readonly="">
+            </div>
+            <div style="margin-bottom: 28px;">
+              <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 8px;">Password</label>
+              <input type="password" placeholder="••••••••••" style="width: 100%; height: 40px; background: white; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 12px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #334155; outline: none;" readonly="">
+            </div>
+            <button style="width: 100%; height: 44px; background: #991B1B; color: white; border: none; border-radius: 3px; font-size: 14px; font-weight: 600; font-family: 'IBM Plex Sans', sans-serif; cursor: pointer; letter-spacing: 0.01em;">Sign in to Admin Portal</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 07  ADMIN — DASHBOARD                              -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div style="max-width: 1440px; margin: 0 auto 72px auto;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+      <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: #64748B; text-transform: uppercase;">Admin</span>
+      <span style="width: 4px; height: 4px; border-radius: 50%; background: #B8B4AA; flex-shrink: 0;"></span>
+      <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.12em; color: #78746C; text-transform: uppercase;">Dashboard</span>
+      <div style="flex: 1; height: 1px; background: #C8C4BB;"></div>
+    </div>
+    <div style="border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
+      <!-- Admin header -->
+      <div style="height: 4px; background: #991B1B;"></div>
+      <nav style="background: white; border-bottom: 1px solid #E2E8F0;">
+        <div style="max-width: 1440px; margin: 0 auto; padding: 0 40px; height: 60px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#1A7530;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 1.5px #D4A800;"><div style="width:25px;height:25px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;"><div style="width:7px;height:7px;border-radius:50%;background:#D4A800;"></div></div></div>
+            <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 15px; font-weight: 700; color: #0F172A; letter-spacing: -0.01em;">BANTAY BIÑAN</div>
+            <div style="width: 1px; height: 16px; background: #E2E8F0;"></div>
+            <div style="font-size: 10px; font-weight: 700; color: #991B1B; letter-spacing: 0.1em; text-transform: uppercase; background: #FEE2E2; padding: 3px 10px; border-radius: 2px;">ADMIN</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <span style="font-size: 12px; color: #64748B; font-family: 'IBM Plex Mono', monospace;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea8b8e878384aa8883848b84c48d859cc49a82">[email&#160;protected]</a></span>
+            <button style="border: 1px solid #CBD5E1; background: white; color: #475569; font-size: 12px; font-weight: 500; font-family: 'IBM Plex Sans', sans-serif; padding: 0 14px; height: 34px; border-radius: 3px; cursor: pointer; display: flex; align-items: center; gap: 6px;"><i data-lucide="log-out" style="width: 13px; height: 13px; color: #94A3B8;"></i>Sign out</button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Dashboard content -->
+      <div style="background: #F8FAFC; padding: 32px 40px;">
+        <div style="max-width: 1440px; margin: 0 auto;">
+          <!-- Page title -->
+          <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 24px;">
+            <div>
+              <h1 style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 24px; font-weight: 700; color: #0F172A; margin: 0 0 4px 0; letter-spacing: -0.01em;">Reports</h1>
+              <p style="font-size: 13px; color: #64748B; margin: 0;">199 total · Updated just now</p>
+            </div>
+          </div>
+
+          <!-- Status summary -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
+            <div style="background: white; border: 1px solid #E2E8F0; border-top: 3px solid #94A3B8; border-radius: 4px; padding: 20px 24px;">
+              <div style="font-size: 10px; font-weight: 700; color: #94A3B8; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px;">Open</div>
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 44px; font-weight: 700; color: #0F172A; line-height: 1; margin-bottom: 6px;">23</div>
+              <div style="font-size: 12px; color: #64748B;">Awaiting assignment</div>
+            </div>
+            <div style="background: white; border: 1px solid #E2E8F0; border-top: 3px solid #F59E0B; border-radius: 4px; padding: 20px 24px;">
+              <div style="font-size: 10px; font-weight: 700; color: #94A3B8; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px;">Assigned</div>
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 44px; font-weight: 700; color: #0F172A; line-height: 1; margin-bottom: 6px;">8</div>
+              <div style="font-size: 12px; color: #64748B;">Routed to departments</div>
+            </div>
+            <div style="background: white; border: 1px solid #E2E8F0; border-top: 3px solid #3B82F6; border-radius: 4px; padding: 20px 24px;">
+              <div style="font-size: 10px; font-weight: 700; color: #94A3B8; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px;">In Progress</div>
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 44px; font-weight: 700; color: #0F172A; line-height: 1; margin-bottom: 6px;">12</div>
+              <div style="font-size: 12px; color: #64748B;">Active repair work</div>
+            </div>
+            <div style="background: white; border: 1px solid #E2E8F0; border-top: 3px solid #22C55E; border-radius: 4px; padding: 20px 24px;">
+              <div style="font-size: 10px; font-weight: 700; color: #94A3B8; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px;">Resolved</div>
+              <div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 44px; font-weight: 700; color: #15803D; line-height: 1; margin-bottom: 6px;">156</div>
+              <div style="font-size: 12px; color: #64748B;">All time</div>
+            </div>
+          </div>
+
+          <!-- Filters -->
+          <div style="background: white; border: 1px solid #E2E8F0; border-radius: 4px; padding: 14px 16px; margin-bottom: 2px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 10px;">
+            <div style="position: relative; display: flex; align-items: center;">
+              <i data-lucide="search" style="width: 14px; height: 14px; color: #94A3B8; position: absolute; left: 12px;"></i>
+              <input placeholder="Search by reference, description, address…" style="width: 100%; height: 38px; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 12px 0 36px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #334155; background: white; outline: none;" readonly="">
+            </div>
+            <select style="height: 38px; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 10px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #64748B; background: white; outline: none;"><option>All statuses</option></select>
+            <select style="height: 38px; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 10px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #64748B; background: white; outline: none;"><option>All categories</option></select>
+            <select style="height: 38px; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 10px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #64748B; background: white; outline: none;"><option>All barangays</option></select>
+          </div>
+
+          <!-- Reports table -->
+          <div style="background: white; border: 1px solid #E2E8F0; border-top: none; border-radius: 0 0 4px 4px; overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #F8FAFC; border-bottom: 1px solid #E2E8F0;">
+                  <th style="padding: 10px 16px; text-align: left; font-size: 9px; font-weight: 700; color: #94A3B8; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; font-family: 'IBM Plex Sans', sans-serif;">Ref. No.</th>
+                  <th style="padding: 10px 16px; text-align: left; font-size: 9px; font-weight: 700; color: #94A3B8; letter-spacing: 0.16em; text-transform: uppercase; font-family: 'IBM Plex Sans', sans-serif;">Status</th>
+                  <th style="padding: 10px 16px; text-align: left; font-size: 9px; font-weight: 700; color: #94A3B8; letter-spacing: 0.16em; text-transform: uppercase; font-family: 'IBM Plex Sans', sans-serif;">Category</th>
+                  <th style="padding: 10px 16px; text-align: left; font-size: 9px; font-weight: 700; color: #94A3B8; letter-spacing: 0.16em; text-transform: uppercase; font-family: 'IBM Plex Sans', sans-serif;">Description</th>
+                  <th style="padding: 10px 16px; text-align: left; font-size: 9px; font-weight: 700; color: #94A3B8; letter-spacing: 0.16em; text-transform: uppercase; font-family: 'IBM Plex Sans', sans-serif;">Barangay</th>
+                  <th style="padding: 10px 16px; text-align: left; font-size: 9px; font-weight: 700; color: #94A3B8; letter-spacing: 0.16em; text-transform: uppercase; font-family: 'IBM Plex Sans', sans-serif;">Submitted</th>
+                  <th style="width: 32px;"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid #F1F5F9; background: #FAFAFA; cursor: pointer;">
+                  <td style="padding: 14px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64748B; white-space: nowrap;">BB-2026-000198</td>
+                  <td style="padding: 14px 16px;"><span style="display: inline-flex; align-items: center; gap: 5px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #3B82F6; flex-shrink: 0;"></span>In Progress</span></td>
+                  <td style="padding: 14px 16px; font-size: 13px; color: #334155; white-space: nowrap;">Road Damage</td>
+                  <td style="padding: 14px 16px; font-size: 13px; color: #0F172A; max-width: 280px;"><span style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Large pothole near market entrance, causing vehicle damage</span></td>
+                  <td style="padding: 14px 16px; font-size: 12px; color: #475569; white-space: nowrap;">San Antonio</td>
+                  <td style="padding: 14px 16px; font-size: 12px; color: #94A3B8; white-space: nowrap;">1 hour ago</td>
+                  <td style="padding: 14px 16px; text-align: right; font-size: 14px; color: #CBD5E1;">→</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #F1F5F9; cursor: pointer;">
+                  <td style="padding: 14px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64748B; white-space: nowrap;">BB-2026-000195</td>
+                  <td style="padding: 14px 16px;"><span style="display: inline-flex; align-items: center; gap: 5px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #475569; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #94A3B8; flex-shrink: 0;"></span>Open</span></td>
+                  <td style="padding: 14px 16px; font-size: 13px; color: #334155; white-space: nowrap;">Flooding</td>
+                  <td style="padding: 14px 16px; font-size: 13px; color: #0F172A; max-width: 280px;"><span style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Floodwater blocking the road after heavy rain, knee-deep</span></td>
+                  <td style="padding: 14px 16px; font-size: 12px; color: #475569; white-space: nowrap;">Timbao</td>
+                  <td style="padding: 14px 16px; font-size: 12px; color: #94A3B8; white-space: nowrap;">3 hours ago</td>
+                  <td style="padding: 14px 16px; text-align: right; font-size: 14px; color: #CBD5E1;">→</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #F1F5F9; cursor: pointer;">
+                  <td style="padding: 14px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64748B; white-space: nowrap;">BB-2026-000191</td>
+                  <td style="padding: 14px 16px;"><span style="display: inline-flex; align-items: center; gap: 5px; background: #FFFBEB; border: 1px solid #FCD34D; color: #92400E; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #F59E0B; flex-shrink: 0;"></span>Assigned</span></td>
+                  <td style="padding: 14px 16px; font-size: 13px; color: #334155; white-space: nowrap;">Streetlight Issues</td>
+                  <td style="padding: 14px 16px; font-size: 13px; color: #0F172A; max-width: 280px;"><span style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">3 consecutive streetlights out along Rizal Ave, dark at night</span></td>
+                  <td style="padding: 14px 16px; font-size: 12px; color: #475569; white-space: nowrap;">Platero</td>
+                  <td style="padding: 14px 16px; font-size: 12px; color: #94A3B8; white-space: nowrap;">Yesterday</td>
+                  <td style="padding: 14px 16px; text-align: right; font-size: 14px; color: #CBD5E1;">→</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #F1F5F9; cursor: pointer;">
+                  <td style="padding: 14px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64748B; white-space: nowrap;">BB-2026-000188</td>
+                  <td style="padding: 14px 16px;"><span style="display: inline-flex; align-items: center; gap: 5px; background: #F0FDF4; border: 1px solid #86EFAC; color: #15803D; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #22C55E; flex-shrink: 0;"></span>Resolved</span></td>
+                  <td style="padding: 14px 16px; font-size: 13px; color: #334155; white-space: nowrap;">Garbage Collection</td>
+                  <td style="padding: 14px 16px; font-size: 13px; color: #0F172A; max-width: 280px;"><span style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Uncollected garbage pile for 5 days, attracting pests</span></td>
+                  <td style="padding: 14px 16px; font-size: 12px; color: #475569; white-space: nowrap;">Canlalay</td>
+                  <td style="padding: 14px 16px; font-size: 12px; color: #94A3B8; white-space: nowrap;">2 days ago</td>
+                  <td style="padding: 14px 16px; text-align: right; font-size: 14px; color: #CBD5E1;">→</td>
+                </tr>
+                <tr style="cursor: pointer;">
+                  <td style="padding: 14px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #64748B; white-space: nowrap;">BB-2026-000185</td>
+                  <td style="padding: 14px 16px;"><span style="display: inline-flex; align-items: center; gap: 5px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #475569; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #94A3B8; flex-shrink: 0;"></span>Open</span></td>
+                  <td style="padding: 14px 16px; font-size: 13px; color: #334155; white-space: nowrap;">Fallen Trees</td>
+                  <td style="padding: 14px 16px; font-size: 13px; color: #0F172A; max-width: 280px;"><span style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Tree fell blocking the sidewalk after storm, pedestrians at risk</span></td>
+                  <td style="padding: 14px 16px; font-size: 12px; color: #475569; white-space: nowrap;">Malaban</td>
+                  <td style="padding: 14px 16px; font-size: 12px; color: #94A3B8; white-space: nowrap;">3 days ago</td>
+                  <td style="padding: 14px 16px; text-align: right; font-size: 14px; color: #CBD5E1;">→</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 08  ADMIN — REPORT DETAIL                          -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div style="max-width: 1440px; margin: 0 auto 72px auto;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+      <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: #64748B; text-transform: uppercase;">Admin</span>
+      <span style="width: 4px; height: 4px; border-radius: 50%; background: #B8B4AA; flex-shrink: 0;"></span>
+      <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.12em; color: #78746C; text-transform: uppercase;">Report Detail</span>
+      <div style="flex: 1; height: 1px; background: #C8C4BB;"></div>
+    </div>
+    <div style="border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
+      <div style="height: 4px; background: #991B1B;"></div>
+      <nav style="background: white; border-bottom: 1px solid #E2E8F0;"><div style="max-width: 1440px; margin: 0 auto; padding: 0 40px; height: 60px; display: flex; align-items: center; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 12px;"><div style="width:36px;height:36px;border-radius:50%;background:#1A7530;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 1.5px #D4A800;"><div style="width:25px;height:25px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;"><div style="width:7px;height:7px;border-radius:50%;background:#D4A800;"></div></div></div><div style="font-family: 'IBM Plex Serif', Georgia, serif; font-size: 15px; font-weight: 700; color: #0F172A;">BANTAY BIÑAN</div><div style="width: 1px; height: 16px; background: #E2E8F0;"></div><div style="font-size: 10px; font-weight: 700; color: #991B1B; letter-spacing: 0.1em; text-transform: uppercase; background: #FEE2E2; padding: 3px 10px; border-radius: 2px;">ADMIN</div></div><div style="display: flex; align-items: center; gap: 14px;"><span style="font-size: 12px; color: #64748B; font-family: 'IBM Plex Mono', monospace;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c0a1a4ada9ae80a2a9aea1aeeea7afb6eeb0a8">[email&#160;protected]</a></span><button style="border: 1px solid #CBD5E1; background: white; color: #475569; font-size: 12px; font-weight: 500; font-family: 'IBM Plex Sans', sans-serif; padding: 0 14px; height: 34px; border-radius: 3px; cursor: pointer; display: flex; align-items: center; gap: 6px;"><i data-lucide="log-out" style="width: 13px; height: 13px; color: #94A3B8;"></i>Sign out</button></div></div></nav>
+
+      <div style="background: #F8FAFC; padding: 32px 40px;">
+        <div style="max-width: 1440px; margin: 0 auto;">
+          <!-- Back link -->
+          <a style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #64748B; margin-bottom: 20px; cursor: pointer;"><i data-lucide="arrow-left" style="width: 13px; height: 13px; color: #94A3B8;"></i>All reports</a>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 360px; gap: 20px; align-items: start;">
+            <!-- Left col: report info -->
+            <div style="grid-column: span 2; display: flex; flex-direction: column; gap: 16px;">
+
+              <!-- Report card -->
+              <div style="background: white; border: 1px solid #E2E8F0; border-radius: 4px; padding: 24px;">
+                <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px;">
+                  <div style="display: flex; align-items: center; gap: 14px;">
+                    <div style="width: 44px; height: 44px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i data-lucide="construction" style="width: 20px; height: 20px; color: #64748B;"></i></div>
+                    <div>
+                      <div style="font-size: 16px; font-weight: 600; color: #0F172A; margin-bottom: 3px;">Road Damage</div>
+                      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #94A3B8;">BB-2026-000198</div>
+                    </div>
+                  </div>
+                  <span style="display: inline-flex; align-items: center; gap: 5px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #3B82F6; flex-shrink: 0;"></span>In Progress</span>
+                </div>
+                <p style="font-size: 14px; color: #334155; line-height: 1.65; margin: 0 0 14px 0;">Large pothole near the public market entrance, approximately 30cm wide and 10cm deep. Hard to see at night and has caused two flat tires this week.</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: #64748B; border-top: 1px solid #F1F5F9; padding-top: 14px;">
+                  <span style="display: flex; align-items: center; gap: 5px;"><i data-lucide="map-pin" style="width: 13px; height: 13px; color: #94A3B8;"></i>San Antonio · Near public market gate 2</span>
+                  <span>Submitted June 12, 2026</span>
+                  <span style="display: flex; align-items: center; gap: 5px;"><i data-lucide="building-2" style="width: 13px; height: 13px; color: #94A3B8;"></i>Engineering Office</span>
+                </div>
+              </div>
+
+              <!-- Map placeholder -->
+              <div style="background: white; border: 1px solid #E2E8F0; border-radius: 4px; overflow: hidden;">
+                <div style="height: 200px; background-color: #F1F5F9; background-image: linear-gradient(rgba(0,0,0,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px); background-size: 32px 32px; display: flex; align-items: center; justify-content: center; position: relative;">
+                  <svg width="28" height="36" viewBox="0 0 28 36" fill="none"><path d="M14 0C6.27 0 0 6.27 0 14C0 24.5 14 36 14 36C14 36 28 24.5 28 14C28 6.27 21.73 0 14 0ZM14 19C11.24 19 9 16.76 9 14C9 11.24 11.24 9 14 9C16.76 9 19 11.24 19 14C19 16.76 16.76 19 14 19Z" fill="#991B1B" opacity="0.8"></path></svg>
+                </div>
+              </div>
+
+              <!-- Activity log -->
+              <div style="background: white; border: 1px solid #E2E8F0; border-radius: 4px; padding: 24px;">
+                <div style="font-size: 10px; font-weight: 700; color: #94A3B8; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px;">Activity Log</div>
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                  <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="display: inline-flex; align-items: center; gap: 4px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; margin-top: 1px;"><span style="width: 4px; height: 4px; border-radius: 50%; background: #3B82F6;"></span>In Progress</span>
+                    <div><p style="font-size: 13px; color: #334155; margin: 0 0 3px 0; line-height: 1.5;">Inspection completed. Repair crew scheduled for June 15.</p><div style="font-size: 11px; color: #94A3B8;">June 13, 2026 at 9:00 AM</div></div>
+                  </div>
+                  <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="display: inline-flex; align-items: center; gap: 4px; background: #FFFBEB; border: 1px solid #FCD34D; color: #92400E; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; margin-top: 1px;"><span style="width: 4px; height: 4px; border-radius: 50%; background: #F59E0B;"></span>Assigned</span>
+                    <div><p style="font-size: 13px; color: #334155; margin: 0 0 3px 0; line-height: 1.5;">Routed to Engineering Office for inspection.</p><div style="font-size: 11px; color: #94A3B8;">June 12, 2026 at 4:30 PM</div></div>
+                  </div>
+                  <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="display: inline-flex; align-items: center; gap: 4px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #475569; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; margin-top: 1px;"><span style="width: 4px; height: 4px; border-radius: 50%; background: #94A3B8;"></span>Open</span>
+                    <div><div style="font-size: 11px; color: #94A3B8;">June 12, 2026 at 2:14 PM · Report received</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right col: Manage panel -->
+            <div style="background: white; border: 1px solid #E2E8F0; border-radius: 4px; padding: 24px; position: sticky; top: 24px; display: flex; flex-direction: column; gap: 20px;">
+              <div style="font-size: 13px; font-weight: 700; color: #0F172A; letter-spacing: -0.01em; padding-bottom: 16px; border-bottom: 1px solid #F1F5F9;">Manage Report</div>
+
+              <div>
+                <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 8px;">Status</label>
+                <select style="width: 100%; height: 40px; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 12px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #0F172A; background: white; outline: none;"><option>In Progress</option></select>
+              </div>
+
+              <div>
+                <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 8px;">Assigned Department</label>
+                <select style="width: 100%; height: 40px; border: 1px solid #CBD5E1; border-radius: 3px; padding: 0 12px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #0F172A; background: white; outline: none;"><option>Engineering Office</option></select>
+              </div>
+
+              <div>
+                <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 8px;">Note <span style="font-weight: 400; color: #94A3B8; text-transform: none; letter-spacing: 0; font-size: 10px;">(optional)</span></label>
+                <textarea rows="3" placeholder="Add an update for the activity log…" style="width: 100%; border: 1px solid #CBD5E1; border-radius: 3px; padding: 10px 12px; font-size: 13px; font-family: 'IBM Plex Sans', sans-serif; color: #334155; background: white; outline: none; resize: none; line-height: 1.5;" readonly=""></textarea>
+              </div>
+
+              <div>
+                <label style="font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 8px;">Resolution Photo</label>
+                <div style="border: 1px dashed #CBD5E1; border-radius: 3px; height: 88px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; cursor: pointer; background: #F8FAFC;">
+                  <i data-lucide="upload" style="width: 18px; height: 18px; color: #94A3B8;"></i>
+                  <span style="font-size: 12px; color: #94A3B8;">Upload proof of completion</span>
+                </div>
+              </div>
+
+              <button style="width: 100%; height: 44px; background: #E2E8F0; color: #94A3B8; border: none; border-radius: 3px; font-size: 13px; font-weight: 600; font-family: 'IBM Plex Sans', sans-serif; cursor: not-allowed; letter-spacing: 0.01em;">Save Changes</button>
+              <p style="font-size: 11px; color: #CBD5E1; text-align: center; margin: -10px 0 0 0;">Make a change to enable save</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom spacer -->
+  <div style="height: 40px;"></div>
+</div>
+</x-dc>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/x-dc" data-dc-script>
+const SEAL_SVG = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+CiAgPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IndoaXRlIi8+CiAgPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjMuNSIgZmlsbD0iIzFBNzUzMCIvPgogIDxjaXJjbGUgY3g9IjI0IiBjeT0iMjQiIHI9IjE5LjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0Q0QTgwMCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8Y2lyY2xlIGN4PSIyNCIgY3k9IjI0IiByPSIxOCIgZmlsbD0id2hpdGUiLz4KICA8Y2lyY2xlIGN4PSIyNCIgY3k9IjI0IiByPSI2IiBmaWxsPSIjRDRBODAwIi8+CiAgPHJlY3QgeD0iMjMiIHk9IjgiIHdpZHRoPSIyIiBoZWlnaHQ9IjEwIiBmaWxsPSIjRDRBODAwIiByeD0iMSIvPgogIDxyZWN0IHg9IjIzIiB5PSI4IiB3aWR0aD0iMiIgaGVpZ2h0PSIxMCIgZmlsbD0iI0Q0QTgwMCIgcng9IjEiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDI0IDI0KSIvPgogIDxyZWN0IHg9IjIzIiB5PSI4IiB3aWR0aD0iMiIgaGVpZ2h0PSIxMCIgZmlsbD0iI0Q0QTgwMCIgcng9IjEiIHRyYW5zZm9ybT0icm90YXRlKDkwIDI0IDI0KSIvPgogIDxyZWN0IHg9IjIzIiB5PSI4IiB3aWR0aD0iMiIgaGVpZ2h0PSIxMCIgZmlsbD0iI0Q0QTgwMCIgcng9IjEiIHRyYW5zZm9ybT0icm90YXRlKDEzNSAyNCAyNCkiLz4KICA8cmVjdCB4PSIyMyIgeT0iOCIgd2lkdGg9IjIiIGhlaWdodD0iMTAiIGZpbGw9IiNENEE4MDAiIHJ4PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgxODAgMjQgMjQpIi8+CiAgPHJlY3QgeD0iMjMiIHk9IjgiIHdpZHRoPSIyIiBoZWlnaHQ9IjEwIiBmaWxsPSIjRDRBODAwIiByeD0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoMjI1IDI0IDI0KSIvPgogIDxyZWN0IHg9IjIzIiB5PSI4IiB3aWR0aD0iMiIgaGVpZ2h0PSIxMCIgZmlsbD0iI0Q0QTgwMCIgcng9IjEiIHRyYW5zZm9ybT0icm90YXRlKDI3MCAyNCAyNCkiLz4KICA8cmVjdCB4PSIyMyIgeT0iOCIgd2lkdGg9IjIiIGhlaWdodD0iMTAiIGZpbGw9IiNENEE4MDAiIHJ4PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgzMTUgMjQgMjQpIi8+CiAgPHRleHQgeD0iMjQiIHk9IjM5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjQuNSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBsZXR0ZXItc3BhY2luZz0iMC44Ij5CScORQU4gQ0lUWTwvdGV4dD4KPC9zdmc+';
+
+class Component extends DCLogic {
+  state = { sealSrc: SEAL_SVG };
+
+  componentDidMount() {
+    if (window.lucide) window.lucide.createIcons({ attrs: { 'stroke-width': '1.5' } });
+  }
+
+  componentDidUpdate() {
+    if (window.lucide) window.lucide.createIcons({ attrs: { 'stroke-width': '1.5' } });
+  }
+
+  renderVals() {
+    const makeSeal = (size, extra) => React.createElement('div', {
+      style: Object.assign({
+        width: size, height: size, flexShrink: 0, borderRadius: '50%',
+        backgroundImage: 'url("' + SEAL_SVG + '")',
+        backgroundSize: 'cover', backgroundPosition: 'center',
+        backgroundColor: 'white'
+      }, extra || {})
+    });
+    return {
+      sealSrc: SEAL_SVG,
+      seal42: makeSeal(42),
+      seal36: makeSeal(36),
+      seal52: makeSeal(52),
+      seal36dim: makeSeal(36, { opacity: 0.65 })
+    };
+  }
+}
+</script>
+</body>
+</html>
