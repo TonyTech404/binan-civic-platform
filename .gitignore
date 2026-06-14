@@ -1,0 +1,20 @@
+node_modules/
+dist/
+build/
+.DS_Store
+*.log
+
+# env
+.env
+.env.local
+.env.*.local
+.dev.vars
+
+# build tools
+.wrangler/
+.vite/
+.turbo/
+
+# supabase
+supabase/.temp/
+supabase/.branches/

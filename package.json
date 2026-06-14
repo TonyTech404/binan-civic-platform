@@ -1,0 +1,21 @@
+{
+  "name": "bantay-binan",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Bantay Biñan — citizen reporting & civic engagement platform",
+  "license": "MIT",
+  "packageManager": "pnpm@10.30.0",
+  "scripts": {
+    "dev": "pnpm --parallel --filter \"./apps/*\" dev",
+    "dev:web": "pnpm --filter @bantay/web dev",
+    "dev:api": "pnpm --filter @bantay/api dev",
+    "build": "pnpm --filter @bantay/shared build && pnpm --filter @bantay/web build && pnpm --filter @bantay/api build",
+    "typecheck": "pnpm -r typecheck",
+    "db:push": "supabase db push",
+    "deploy:api": "pnpm --filter @bantay/api deploy",
+    "deploy:web": "pnpm --filter @bantay/web deploy"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

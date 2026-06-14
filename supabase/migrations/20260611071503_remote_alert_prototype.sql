@@ -1,0 +1,3 @@
+-- Placeholder for pre-existing remote migration 20260611071503 (alert/subscriber prototype).
+-- Its definitions live only in the remote DB; this stub keeps local history in sync.
+-- DO NOT rely on this file to reproduce that schema locally.

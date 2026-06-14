@@ -1,0 +1,25 @@
+name = "bantay-binan-api"
+main = "src/index.ts"
+compatibility_date = "2026-06-01"
+compatibility_flags = ["nodejs_compat"]
+account_id = "004671d1382db8d358e35743ea54a031"
+
+# Public, browser-safe values. SUPABASE_SERVICE_ROLE_KEY is set as a SECRET:
+#   wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+# Locally it comes from apps/api/.dev.vars (gitignored).
+[vars]
+SUPABASE_URL = "https://eykcrbselytwsprqbfki.supabase.co"
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5a2NyYnNlbHl0d3NwcnFiZmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExNDcyNDgsImV4cCI6MjA5NjcyMzI0OH0.Ges6T2U07WaU0PhPx0J4yxp8MjKFo-LDYfrD41OA0fA"
+# Comma-separated allowlist. Add preview/custom domains as needed.
+ALLOWED_ORIGIN = "https://bantay-binan.buildwithanthony.com,https://bantay-binan.pages.dev,http://localhost:5173,http://localhost:5174"
+
+# Custom domain for the API (zone buildwithanthony.com is in this account).
+[[routes]]
+pattern = "bantay-binan-api.buildwithanthony.com"
+custom_domain = true
+
+# Photo storage. Requires R2 to be enabled on the account, then:
+#   wrangler r2 bucket create bantay-binan-photos
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "bantay-binan-photos"
