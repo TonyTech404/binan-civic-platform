@@ -18,3 +18,11 @@ build/
 # supabase
 supabase/.temp/
 supabase/.branches/
+
+# cloudflare build artifacts
+.open-next/
+
+# large media / demo outputs
+*.mp4
+*.webm
+demo-output/

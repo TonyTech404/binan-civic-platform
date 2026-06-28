@@ -16,6 +16,7 @@
     "deploy:web": "pnpm --filter @bantay/web deploy"
   },
   "devDependencies": {
+    "playwright": "^1.60.0",
     "typescript": "^5.7.3"
   }
 }

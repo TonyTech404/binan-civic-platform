@@ -52,12 +52,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Could not create report." }, { status: 500 });
   }
 
-  // Send Telegram notification (non-blocking)
-  const host  = req.headers.get("host") ?? "localhost:3001";
-  const proto = host.startsWith("localhost") ? "http" : "https";
-  const adminUrl = `https://bantay-binan.buildwithanthony.com/admin`;
-
-  sendEmergencyAlert({
+  // Send Telegram notification — must be awaited in Cloudflare Workers
+  // (Worker terminates on response, cutting off non-blocking async work)
+  await sendEmergencyAlert({
     school:       SCHOOL.name,
     building:     SCHOOL.building,
     room:         SCHOOL.room,
@@ -66,8 +63,8 @@ export async function POST(req: NextRequest) {
     reference:    report.reference_number,
     time:         timeStr,
     date:         dateStr,
-    dashboardUrl: adminUrl,
-  }).catch(console.error);
+    dashboardUrl: "https://bantay-binan.buildwithanthony.com/admin",
+  });
 
   return NextResponse.json(report, { status: 201 });
 }
