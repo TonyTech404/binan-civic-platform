@@ -6,20 +6,22 @@ import {
   Trash2,
   TreePine,
   ShieldAlert,
+  Siren,
   CircleHelp,
   type LucideIcon,
 } from "lucide-react";
 import { CATEGORIES, type CategorySlug } from "@bantay/shared";
 
 const ICONS: Record<CategorySlug, LucideIcon> = {
-  road_damage: Construction,
-  streetlight: Lightbulb,
-  flooding: Waves,
+  road_damage:      Construction,
+  streetlight:      Lightbulb,
+  flooding:         Waves,
   blocked_drainage: Droplets,
-  garbage: Trash2,
-  fallen_trees: TreePine,
-  public_safety: ShieldAlert,
-  other: CircleHelp,
+  garbage:          Trash2,
+  fallen_trees:     TreePine,
+  public_safety:    ShieldAlert,
+  school_emergency: Siren,
+  other:            CircleHelp,
 };
 
 export function categoryIcon(slug: string): LucideIcon {

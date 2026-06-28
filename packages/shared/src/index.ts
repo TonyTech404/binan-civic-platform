@@ -27,14 +27,15 @@ export const INITIAL_STATUS: ReportStatus = "open";
 
 // ── Categories ───────────────────────────────────────────────
 export const CATEGORIES = [
-  { slug: "road_damage", label: "Road Damage", icon: "construction" },
-  { slug: "streetlight", label: "Streetlight Issues", icon: "lightbulb" },
-  { slug: "flooding", label: "Flooding", icon: "waves" },
-  { slug: "blocked_drainage", label: "Blocked Drainage", icon: "droplets" },
-  { slug: "garbage", label: "Garbage Collection", icon: "trash-2" },
-  { slug: "fallen_trees", label: "Fallen Trees", icon: "tree-pine" },
-  { slug: "public_safety", label: "Public Safety", icon: "shield-alert" },
-  { slug: "other", label: "Other", icon: "circle-help" },
+  { slug: "road_damage",       label: "Road Damage",          icon: "construction"  },
+  { slug: "streetlight",       label: "Streetlight Issues",   icon: "lightbulb"     },
+  { slug: "flooding",          label: "Flooding",             icon: "waves"         },
+  { slug: "blocked_drainage",  label: "Blocked Drainage",     icon: "droplets"      },
+  { slug: "garbage",           label: "Garbage Collection",   icon: "trash-2"       },
+  { slug: "fallen_trees",      label: "Fallen Trees",         icon: "tree-pine"     },
+  { slug: "public_safety",     label: "Public Safety",        icon: "shield-alert"  },
+  { slug: "school_emergency",  label: "School Emergency",     icon: "siren"         },
+  { slug: "other",             label: "Other",                icon: "circle-help"   },
 ] as const;
 export type CategorySlug = (typeof CATEGORIES)[number]["slug"];
 export const CATEGORY_SLUGS = CATEGORIES.map((c) => c.slug) as [
@@ -54,14 +55,15 @@ export type DepartmentSlug = (typeof DEPARTMENTS)[number]["slug"];
 
 /** Suggested default routing — citizens never see this, admins can override. */
 export const CATEGORY_DEFAULT_DEPARTMENT: Record<CategorySlug, DepartmentSlug> = {
-  road_damage: "engineering",
-  streetlight: "engineering",
-  flooding: "drrmo",
+  road_damage:      "engineering",
+  streetlight:      "engineering",
+  flooding:         "drrmo",
   blocked_drainage: "environment",
-  garbage: "environment",
-  fallen_trees: "environment",
-  public_safety: "drrmo",
-  other: "barangay",
+  garbage:          "environment",
+  fallen_trees:     "environment",
+  public_safety:    "drrmo",
+  school_emergency: "drrmo",
+  other:            "barangay",
 };
 
 // ── Barangays of Biñan City (official 24) ────────────────────
