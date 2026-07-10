@@ -9,11 +9,13 @@
     "dev": "pnpm --parallel --filter \"./apps/*\" dev",
     "dev:web": "pnpm --filter @bantay/web dev",
     "dev:api": "pnpm --filter @bantay/api dev",
+    "dev:alerto": "pnpm --filter @bantay/alerto dev",
     "build": "pnpm --filter @bantay/shared build && pnpm --filter @bantay/web build && pnpm --filter @bantay/api build",
     "typecheck": "pnpm -r typecheck",
     "db:push": "supabase db push",
     "deploy:api": "pnpm --filter @bantay/api deploy",
-    "deploy:web": "pnpm --filter @bantay/web deploy"
+    "deploy:web": "pnpm --filter @bantay/web deploy",
+    "deploy:alerto": "pnpm --filter @bantay/alerto deploy"
   },
   "devDependencies": {
     "playwright": "^1.60.0",

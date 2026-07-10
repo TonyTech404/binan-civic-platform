@@ -1,0 +1,21 @@
+name = "bantay-alerto"
+main = ".open-next/worker.js"
+compatibility_date = "2025-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+assets = { directory = ".open-next/assets", binding = "ASSETS" }
+
+[vars]
+NEXT_PUBLIC_SUPABASE_URL          = "https://eykcrbselytwsprqbfki.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY     = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5a2NyYnNlbHl0d3NwcnFiZmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExNDcyNDgsImV4cCI6MjA5NjcyMzI0OH0.Ges6T2U07WaU0PhPx0J4yxp8MjKFo-LDYfrD41OA0fA"
+# BotFather bot username (without @).
+NEXT_PUBLIC_TELEGRAM_BOT_USERNAME = "BinanAlertoBot"
+
+# Secrets (set via: wrangler secret put <NAME>)
+#   SUPABASE_SERVICE_ROLE_KEY   — Supabase service role (server only)
+#   TELEGRAM_BOT_TOKEN          — from BotFather
+#   TELEGRAM_WEBHOOK_SECRET     — random string; also passed to setWebhook
+
+[[routes]]
+pattern = "bantay-alerto.buildwithanthony.com"
+custom_domain = true
