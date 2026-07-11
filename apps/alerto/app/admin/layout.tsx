@@ -49,6 +49,7 @@ const NAV: { href: string; label: string; perm: Permission | null }[] = [
   { href: "/admin/alerts", label: "History", perm: "alerts:view" },
   { href: "/admin/subscribers", label: "Subscribers", perm: "subscribers:view" },
   { href: "/admin/team", label: "Team", perm: "team:view" },
+  { href: "/admin/account", label: "Account", perm: null },
 ];
 
 function Chrome({ children }: { children: React.ReactNode }) {
@@ -83,9 +84,13 @@ function Chrome({ children }: { children: React.ReactNode }) {
                 {ROLE_LABEL[role]}
               </span>
             )}
-            <span className="hidden font-mono text-[11px] text-slate-400 md:inline">
+            <Link
+              href="/admin/account"
+              className="hidden font-mono text-[11px] text-slate-400 transition-colors hover:text-slate-800 md:inline"
+              title="Account settings"
+            >
               {session?.user.email}
-            </span>
+            </Link>
             <Button variant="outline" size="sm" onClick={handleSignOut} className="h-8 px-3 text-[12px]">
               Sign out
             </Button>
