@@ -17,5 +17,5 @@ NEXT_PUBLIC_TELEGRAM_BOT_USERNAME = "BinanAlertoBot"
 #   TELEGRAM_WEBHOOK_SECRET     — random string; also passed to setWebhook
 
 [[routes]]
-pattern = "bantay-alerto.buildwithanthony.com"
+pattern = "bantaybinan.com"
 custom_domain = true

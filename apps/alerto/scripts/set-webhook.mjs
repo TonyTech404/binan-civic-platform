@@ -33,7 +33,7 @@ const TOKEN = process.env.TELEGRAM_BOT_TOKEN || file.TELEGRAM_BOT_TOKEN;
 const SECRET = process.env.TELEGRAM_WEBHOOK_SECRET || file.TELEGRAM_WEBHOOK_SECRET;
 const url =
   process.argv[2] ||
-  "https://bantay-alerto.buildwithanthony.com/api/telegram/webhook";
+  "https://bantaybinan.com/api/telegram/webhook";
 
 if (!TOKEN || TOKEN.startsWith("REPLACE")) {
   console.error("✗ TELEGRAM_BOT_TOKEN is not set (env or .env.local).");

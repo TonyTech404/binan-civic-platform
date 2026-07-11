@@ -83,7 +83,7 @@ as the destination), register it under `"sms"`, and route subscribers by their
    wrangler secret put TELEGRAM_BOT_TOKEN
    wrangler secret put TELEGRAM_WEBHOOK_SECRET
    ```
-   (Custom domain `bantay-alerto.buildwithanthony.com` is set in `wrangler.toml`.)
+   (Custom domain `bantaybinan.com` is set in `wrangler.toml`.)
 4. **Register the webhook** — `cd apps/alerto && pnpm set-webhook`
    (defaults to the production URL; reads token/secret from `.env.local`).
 5. **Claim owner** — sign in at `/admin/login` with a Supabase Auth account
