@@ -19,3 +19,7 @@ NEXT_PUBLIC_TELEGRAM_BOT_USERNAME = "BinanAlertoBot"
 [[routes]]
 pattern = "bantaybinan.com"
 custom_domain = true
+
+[[routes]]
+pattern = "www.bantaybinan.com"
+custom_domain = true
