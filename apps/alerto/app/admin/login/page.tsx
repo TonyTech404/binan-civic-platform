@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAdmin, supabase } from "@/components/admin/ctx";
 import { Seal } from "@/components/Seal";
@@ -36,6 +37,12 @@ export default function AdminLogin() {
     <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
       <div className="fixed top-0 left-0 right-0 h-1 bg-brand-600" />
       <div className="w-full max-w-[400px]">
+        <Link
+          href="/"
+          className="mb-4 inline-flex items-center gap-1.5 text-[12px] font-semibold text-slate-500 transition-colors hover:text-slate-900"
+        >
+          ← Bumalik sa homepage
+        </Link>
         <div className="mb-6 flex items-start gap-2 rounded-sm border-l-[3px] border-l-brand-600 bg-brand-50 px-3.5 py-2.5">
           <div>
             <div className="mb-0.5 text-[11px] font-bold uppercase tracking-[0.08em] text-brand-800">
