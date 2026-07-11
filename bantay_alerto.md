@@ -37,9 +37,17 @@ per-recipient audit log are all delivery-channel-agnostic.
 - `/admin/team` — invite members and set roles.
 
 **RBAC roles** (`lib/rbac.ts`, table `alerto_admins`)
-- `owner` — everything + manage team
+- `owner` — everything + manage team (always city-wide)
 - `operator` — compose & send alerts, view all
 - `viewer` — read-only dashboards
+
+**Barangay scope** (multi-tenant): each staff row has a nullable `barangay_id`.
+`NULL` = city-wide; set = scoped (sees only their barangay's subscribers, can
+only send to their barangay). Enforced in **RLS** (scope-aware read policies via
+`alerto_is_city()` / `alerto_barangay()` SECURITY DEFINER helpers — the real
+boundary, since the dashboard reads Supabase directly) AND in `/api/alerts`
+(forces the target). City owners assign scope on the Team page. Migration
+`20260711000001_alerto_barangay_scope.sql`.
 
 Reads are RLS-gated to team members; **sending + team management** go through
 server API routes with the service role *after* an RBAC check, so nothing can be

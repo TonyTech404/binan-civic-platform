@@ -53,7 +53,7 @@ const NAV: { href: string; label: string; perm: Permission | null }[] = [
 ];
 
 function Chrome({ children }: { children: React.ReactNode }) {
-  const { session, role, signOut } = useAdmin();
+  const { session, role, barangayName, signOut } = useAdmin();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -82,6 +82,11 @@ function Chrome({ children }: { children: React.ReactNode }) {
             {role && (
               <span className="hidden rounded-sm bg-slate-100 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-slate-500 sm:inline">
                 {ROLE_LABEL[role]}
+              </span>
+            )}
+            {barangayName && (
+              <span className="hidden rounded-sm bg-amber-50 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-amber-700 sm:inline">
+                📍 {barangayName}
               </span>
             )}
             <Link

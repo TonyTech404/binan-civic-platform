@@ -11,7 +11,8 @@ import { CATEGORIES, CATEGORY_LABEL, SEVERITIES, SEVERITY_LABEL, SEVERITY_STYLE 
 type Brgy = { id: string; name: string; is_riverside: boolean };
 
 export default function Compose() {
-  const { role, authFetch } = useAdmin();
+  const { role, authFetch, barangayId, barangayName } = useAdmin();
+  const scoped = !!barangayId; // barangay-scoped staff can only send to their barangay
   const router = useRouter();
 
   const [barangays, setBarangays] = React.useState<Brgy[]>([]);
@@ -45,15 +46,16 @@ export default function Compose() {
   async function send() {
     setError(null);
     if (!title.trim() || !body.trim()) return setError("Kailangan ang pamagat at mensahe.");
-    if (scope === "barangays" && selected.size === 0) return setError("Pumili ng kahit isang barangay.");
+    if (!scoped && scope === "barangays" && selected.size === 0) return setError("Pumili ng kahit isang barangay.");
 
     setSending(true);
     const res = await authFetch("/api/alerts", {
       method: "POST",
       body: JSON.stringify({
         title, body, category, severity,
-        target_scope: scope,
-        barangay_ids: scope === "barangays" ? [...selected] : [],
+        // Scoped staff always send to their own barangay (server re-enforces this).
+        target_scope: scoped ? "barangays" : scope,
+        barangay_ids: scoped ? [barangayId] : scope === "barangays" ? [...selected] : [],
       }),
     });
     setSending(false);
@@ -125,12 +127,24 @@ export default function Compose() {
           {/* Targeting */}
           <Card className="p-5">
             <Label>Sino ang makakatanggap?</Label>
+
+            {scoped ? (
+              // Barangay-scoped staff: target is locked to their barangay.
+              <div className="flex items-center gap-3 rounded-md border border-brand-200 bg-brand-50 px-4 py-3">
+                <span className="text-lg">📍</span>
+                <div>
+                  <div className="text-[13px] font-bold text-brand-700">Barangay {barangayName}</div>
+                  <div className="text-[11.5px] text-brand-700/80">Ipapadala lang sa mga subscriber ng iyong barangay.</div>
+                </div>
+              </div>
+            ) : (
             <div className="grid grid-cols-2 gap-3">
               <ScopeButton active={scope === "city"} onClick={() => setScope("city")} title="Buong Lungsod" desc="Lahat ng active subscriber" />
               <ScopeButton active={scope === "barangays"} onClick={() => setScope("barangays")} title="Piling Barangay" desc="Piliin ang mga apektadong lugar" />
             </div>
+            )}
 
-            {scope === "barangays" && (
+            {!scoped && scope === "barangays" && (
               <div className="mt-4">
                 <div className="mb-2.5 flex flex-wrap items-center gap-2">
                   <button onClick={() => setSelected(new Set(barangays.map((b) => b.id)))} className="rounded border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-600 hover:bg-slate-50">Piliin lahat</button>

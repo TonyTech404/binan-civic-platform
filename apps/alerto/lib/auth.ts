@@ -6,6 +6,8 @@ export type Caller = {
   userId: string;
   email: string;
   role: Role;
+  /** Assigned barangay, or null for city-wide staff. */
+  barangayId: string | null;
 };
 
 /**
@@ -28,12 +30,17 @@ export async function getCaller(req: NextRequest): Promise<Caller | null> {
   const svc = createServiceClient();
   const { data: admin } = await svc
     .from("alerto_admins")
-    .select("user_id, email, role")
+    .select("user_id, email, role, barangay_id")
     .eq("user_id", userRes.user.id)
     .maybeSingle();
 
   if (!admin) return null;
-  return { userId: admin.user_id, email: admin.email, role: admin.role as Role };
+  return {
+    userId: admin.user_id,
+    email: admin.email,
+    role: admin.role as Role,
+    barangayId: admin.barangay_id ?? null,
+  };
 }
 
 /** Guard helper: returns the caller only if they hold `perm`, else null. */

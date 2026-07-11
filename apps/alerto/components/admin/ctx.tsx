@@ -15,6 +15,9 @@ export function supabase() {
 type AdminState = {
   session: Session | null;
   role: Role | null;
+  /** Assigned barangay id, or null for city-wide staff. */
+  barangayId: string | null;
+  barangayName: string | null;
   teamEmpty: boolean;
   loading: boolean;
   refresh: () => Promise<void>;
@@ -34,12 +37,16 @@ export function useAdmin(): AdminState {
 export function AdminProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = React.useState<Session | null>(null);
   const [role, setRole] = React.useState<Role | null>(null);
+  const [barangayId, setBarangayId] = React.useState<string | null>(null);
+  const [barangayName, setBarangayName] = React.useState<string | null>(null);
   const [teamEmpty, setTeamEmpty] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
   const loadRole = React.useCallback(async (s: Session | null) => {
     if (!s) {
       setRole(null);
+      setBarangayId(null);
+      setBarangayName(null);
       setTeamEmpty(false);
       return;
     }
@@ -49,6 +56,8 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
       });
       const data = await res.json();
       setRole(data.role ?? null);
+      setBarangayId(data.barangayId ?? null);
+      setBarangayName(data.barangayName ?? null);
       setTeamEmpty(!!data.teamEmpty);
     } catch {
       setRole(null);
@@ -96,7 +105,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   );
 
   const value: AdminState = {
-    session, role, teamEmpty, loading, refresh, signOut, authFetch,
+    session, role, barangayId, barangayName, teamEmpty, loading, refresh, signOut, authFetch,
   };
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
