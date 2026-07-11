@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p 3002",
     "build": "next build",
-    "build:cf": "next build && opennextjs-cloudflare build",
+    "build:cf": "rm -rf .next .open-next && next build && opennextjs-cloudflare build",
     "deploy": "pnpm build:cf && wrangler deploy",
     "start": "next start -p 3002",
     "set-webhook": "node scripts/set-webhook.mjs",
