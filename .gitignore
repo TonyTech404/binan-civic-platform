@@ -26,3 +26,6 @@ supabase/.branches/
 *.mp4
 *.webm
 demo-output/
+
+# Marketing assets (videos, deck, images) — kept local
+marketing/

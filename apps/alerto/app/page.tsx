@@ -15,7 +15,7 @@ const FEATURES = [
   {
     tag: "Opisyal",
     title: "Direkta sa Pamahalaan",
-    body: "Bawat mensahe ay mula mismo sa City Government of Biñan Disaster Risk Reduction & Management Office.",
+    body: "Bawat mensahe ay mula mismo sa Tanggapan ni Konsehal Titus Bautista.",
   },
 ];
 
@@ -104,7 +104,7 @@ export default function Landing() {
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto flex max-w-[1120px] flex-col items-center justify-between gap-3 px-5 py-6 text-center sm:flex-row sm:px-8 sm:text-left">
           <p className="text-[12px] text-slate-500">
-            City Government of Biñan, Laguna · Disaster Risk Reduction & Management Office
+            Tanggapan ni Konsehal Titus Bautista · Biñan, Laguna
           </p>
           <p className="text-[11px] text-slate-400">
             Prototype — Telegram delivery. SMS coming soon.

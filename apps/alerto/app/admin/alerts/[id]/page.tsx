@@ -4,7 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { supabase, useAdmin } from "@/components/admin/ctx";
-import { Card, Badge, Spinner } from "@/components/ui";
+import { can } from "@/lib/rbac";
+import { Card, Badge, Button, Spinner } from "@/components/ui";
 import { fmtDateTime } from "@/lib/utils";
 import { SEVERITY_STYLE, STATUS_STYLE, CATEGORY_LABEL } from "@/components/admin/styles";
 
@@ -20,27 +21,49 @@ type Log = {
 
 export default function AlertDetail() {
   const { id } = useParams<{ id: string }>();
-  const { loading: authLoading } = useAdmin();
+  const { loading: authLoading, role, authFetch } = useAdmin();
   const [alert, setAlert] = React.useState<Alert | null>(null);
   const [targets, setTargets] = React.useState<string[]>([]);
   const [logs, setLogs] = React.useState<Log[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [draining, setDraining] = React.useState(false);
+  const [dprog, setDprog] = React.useState<{ sent: number; total: number } | null>(null);
 
-  React.useEffect(() => {
-    if (authLoading || !id) return;
-    (async () => {
-      const sb = supabase();
-      const [a, t, l] = await Promise.all([
-        sb.from("alerto_alerts").select("*").eq("id", id).maybeSingle(),
-        sb.from("alerto_alert_targets").select("alerto_barangays(name)").eq("alert_id", id),
-        sb.from("alerto_send_logs").select("id,channel,destination,status,error,alerto_subscribers(full_name,telegram_username,alerto_barangays(name))").eq("alert_id", id),
-      ]);
-      setAlert(a.data as Alert | null);
-      setTargets(((t.data ?? []) as { alerto_barangays?: { name?: string } }[]).map((r) => r.alerto_barangays?.name ?? "").filter(Boolean));
-      setLogs((l.data ?? []) as unknown as Log[]);
-      setLoading(false);
-    })();
-  }, [authLoading, id]);
+  const load = React.useCallback(async () => {
+    if (!id) return;
+    const sb = supabase();
+    const [a, t, l] = await Promise.all([
+      sb.from("alerto_alerts").select("*").eq("id", id).maybeSingle(),
+      sb.from("alerto_alert_targets").select("alerto_barangays(name)").eq("alert_id", id),
+      sb.from("alerto_send_logs").select("id,channel,destination,status,error,alerto_subscribers(full_name,telegram_username,alerto_barangays(name))").eq("alert_id", id),
+    ]);
+    setAlert(a.data as Alert | null);
+    setTargets(((t.data ?? []) as { alerto_barangays?: { name?: string } }[]).map((r) => r.alerto_barangays?.name ?? "").filter(Boolean));
+    setLogs((l.data ?? []) as unknown as Log[]);
+    setLoading(false);
+  }, [id]);
+
+  React.useEffect(() => { if (!authLoading) load(); }, [authLoading, load]);
+
+  const pending = logs.filter((l) => l.status === "pending").length;
+
+  // Continue an incomplete broadcast: drain pending recipients batch-by-batch.
+  async function continueSend() {
+    setDraining(true);
+    let guard = 0;
+    let more = true;
+    while (more && guard < 300) {
+      guard++;
+      const r = await authFetch(`/api/alerts/${id}/send`, { method: "POST" });
+      const d = await r.json().catch(() => null);
+      if (!r.ok || !d) break;
+      setDprog({ sent: d.sent, total: d.total });
+      more = d.pending > 0 && d.processed > 0;
+    }
+    await load();
+    setDraining(false);
+    setDprog(null);
+  }
 
   if (loading) return <div className="py-20 text-center"><Spinner className="mx-auto h-6 w-6 text-slate-300" /></div>;
   if (!alert) return <p className="py-20 text-center text-slate-400">Hindi mahanap ang alerto.</p>;
@@ -70,12 +93,29 @@ export default function AlertDetail() {
             <MiniStat label="Delivered" value={alert.delivered_count} tone="emerald" />
             <MiniStat label="Failed" value={alert.failed_count} tone="brand" />
           </div>
+
+          {pending > 0 && (
+            <Card className="border-amber-200 bg-amber-50 p-4">
+              <div className="text-[13px] text-amber-800">
+                <b className="font-mono">{pending}</b> pang naka-pila — hindi pa naipapadala.
+              </div>
+              {can(role, "alerts:send") ? (
+                <Button onClick={continueSend} disabled={draining} className="mt-2.5 w-full">
+                  {draining && <Spinner className="h-4 w-4" />}
+                  {draining ? (dprog ? `Ipinapadala… ${dprog.sent}/${dprog.total}` : "Ipinapadala…") : "Ipagpatuloy ang pagpapadala"}
+                </Button>
+              ) : (
+                <div className="mt-1 text-[11.5px] text-amber-700">Hilingin sa isang operator na ipagpatuloy.</div>
+              )}
+            </Card>
+          )}
         </div>
 
         {/* Delivery log */}
         <Card className="overflow-hidden lg:col-span-3">
-          <div className="border-b border-slate-100 px-5 py-3.5">
+          <div className="flex items-center justify-between border-b border-slate-100 px-5 py-3.5">
             <h2 className="text-[13px] font-bold uppercase tracking-[0.08em] text-slate-500">Delivery Log</h2>
+            <button onClick={load} className="text-[12px] font-semibold text-slate-400 hover:text-slate-700">Refresh</button>
           </div>
           <div className="max-h-[520px] overflow-y-auto">
             <table className="w-full text-left text-[13px]">

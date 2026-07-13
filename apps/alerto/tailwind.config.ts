@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 // Bantay Biñan government design system (ported from apps/web) so Bantay Alerto
-// reads as an official City Government of Biñan service.
+// mirrors the Bantay Biñan look for the Office of Councilor Titus Bautista service.
 const config: Config = {
   content: [
     "./app/**/*.{ts,tsx}",

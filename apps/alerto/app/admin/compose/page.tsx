@@ -22,8 +22,9 @@ export default function Compose() {
   const [scope, setScope] = React.useState<"city" | "barangays">("city");
   const [selected, setSelected] = React.useState<Set<string>>(new Set());
   const [sending, setSending] = React.useState(false);
+  const [progress, setProgress] = React.useState<{ sent: number; total: number } | null>(null);
   const [error, setError] = React.useState<string | null>(null);
-  const [result, setResult] = React.useState<{ id: string; delivered_count: number; failed_count: number; recipients_total: number } | null>(null);
+  const [result, setResult] = React.useState<{ id: string; total: number; sent: number; failed: number; pending: number } | null>(null);
 
   React.useEffect(() => {
     supabase().from("alerto_barangays").select("id,name,is_riverside").order("name")
@@ -48,6 +49,7 @@ export default function Compose() {
     if (scope === "barangays" && selected.size === 0) return setError("Pumili ng kahit isang barangay.");
 
     setSending(true);
+    setProgress(null);
     const res = await authFetch("/api/alerts", {
       method: "POST",
       body: JSON.stringify({
@@ -56,10 +58,34 @@ export default function Compose() {
         barangay_ids: scope === "barangays" ? [...selected] : [],
       }),
     });
+    let data = await res.json().catch(() => null);
+    if (!res.ok || !data) { setSending(false); return setError((data && data.error) || "Hindi naipadala ang alerto."); }
+    setProgress({ sent: data.sent, total: data.total });
+
+    // Drain the rest in batches — each request stays under Cloudflare's send limit.
+    let guard = 0;
+    while (data.pending > 0 && guard < 300) {
+      guard++;
+      const r = await authFetch(`/api/alerts/${data.id}/send`, { method: "POST" });
+      const d = await r.json().catch(() => null);
+      if (!r.ok || !d) break;
+      data = d;
+      setProgress({ sent: data.sent, total: data.total });
+      if (d.processed === 0) break;
+    }
     setSending(false);
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) return setError(data.error ?? "Hindi naipadala ang alerto.");
     setResult(data);
+  }
+
+  if (sending) {
+    return (
+      <div className="mx-auto max-w-[520px] py-16 text-center">
+        <Spinner className="mx-auto h-8 w-8 text-brand-600" />
+        <h1 className="mt-4 font-serif text-[22px] font-bold text-slate-900">Ipinapadala ang alerto…</h1>
+        <p className="mt-2 font-mono text-[15px] text-slate-600">{progress ? `${progress.sent} / ${progress.total}` : "Inihahanda…"}</p>
+        <p className="mt-2 text-[12.5px] text-slate-400">Huwag munang isara ang tab hangga't hindi tapos.</p>
+      </div>
+    );
   }
 
   if (result) {
@@ -68,10 +94,13 @@ export default function Compose() {
         <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-2xl">📨</div>
         <h1 className="font-serif text-[24px] font-bold text-slate-900">Naipadala ang alerto</h1>
         <p className="mt-2 text-[14px] text-slate-600">
-          Naabot ang <b className="font-mono">{result.delivered_count}</b> na subscriber
-          {result.failed_count > 0 && <> · <span className="text-brand-600">{result.failed_count} bigo</span></>}
-          {" "}(sa kabuuang {result.recipients_total}).
+          Naabot ang <b className="font-mono">{result.sent}</b> na subscriber
+          {result.failed > 0 && <> · <span className="text-brand-600">{result.failed} bigo</span></>}
+          {" "}(sa kabuuang {result.total}).
         </p>
+        {result.pending > 0 && (
+          <p className="mt-1 text-[13px] text-amber-700">May {result.pending} pang naka-pila — buksan ang detalye para ituloy.</p>
+        )}
         <div className="mt-6 flex justify-center gap-3">
           <Link href={`/admin/alerts/${result.id}`}>
             <Button variant="outline">Tingnan ang detalye</Button>
@@ -173,7 +202,7 @@ export default function Compose() {
                 </div>
                 <div className="text-[14px] font-bold text-slate-900">{title || "Pamagat ng alerto"}</div>
                 <div className="mt-1 whitespace-pre-wrap text-[13px] leading-[1.5] text-slate-700">{body || "Lalabas dito ang iyong mensahe…"}</div>
-                <div className="mt-2 text-[11px] italic text-slate-400">Opisyal na abiso mula sa Pamahalaang Lungsod ng Biñan.</div>
+                <div className="mt-2 text-[11px] italic text-slate-400">Mula sa Tanggapan ni Konsehal Titus Bautista.</div>
               </div>
             </div>
           </div>

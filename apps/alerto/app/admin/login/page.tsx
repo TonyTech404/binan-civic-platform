@@ -42,7 +42,7 @@ export default function AdminLogin() {
               Restricted Access
             </div>
             <div className="text-[11px] leading-[1.5] text-brand-700">
-              Authorized City Government of Biñan personnel only.
+              Authorized Office of Councilor Titus Bautista personnel only.
             </div>
           </div>
         </div>

@@ -97,7 +97,7 @@ export default async function Subscribe() {
             </div>
             <p className="mt-1 text-[12.5px] leading-[1.55] text-slate-500">
               Sa pag-subscribe, pumapayag ka na makatanggap ng opisyal na alerto
-              mula sa Pamahalaang Lungsod ng Biñan. Ang iyong impormasyon ay
+              mula sa Tanggapan ni Konsehal Titus Bautista. Ang iyong impormasyon ay
               gagamitin lamang para sa pagpapadala ng abiso (Data Privacy Act,
               RA 10173). Maaari kang mag-unsubscribe anumang oras sa pamamagitan
               ng pag-type ng <span className="font-mono">/stop</span>.

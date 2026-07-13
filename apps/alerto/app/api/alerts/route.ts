@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requirePermission } from "@/lib/auth";
 import { createServiceClient } from "@/lib/supabase";
-import { adapterFor, type DeliveryMessage, type Severity } from "@/lib/delivery";
+import { type Severity } from "@/lib/delivery";
+import { processBatch } from "@/lib/send";
 
 export const dynamic = "force-dynamic";
 
@@ -17,10 +18,11 @@ type Body = {
 const CATEGORIES = ["flood","weather","brownout","advisory","health","security","announcement"];
 const SEVERITIES: Severity[] = ["info","advisory","warning","critical"];
 
-// Compose + broadcast an alert. RBAC-gated (alerts:send). The send loop drives
-// a channel-agnostic DeliveryAdapter and records one send_log row per recipient,
-// so the whole thing is auditable and — because of the unique(alert,subscriber)
-// constraint — safe to re-run.
+// Compose + broadcast an alert. RBAC-gated (alerts:send). Recipients are queued
+// as send_logs (one row each), then sent in bounded batches: this call sends the
+// FIRST batch and returns how many remain `pending`. The client drains the rest
+// via POST /api/alerts/[id]/send. This keeps each request under Cloudflare's
+// per-invocation subrequest limit and is fully resumable.
 export async function POST(req: NextRequest) {
   const caller = await requirePermission(req, "alerts:send");
   if (!caller) {
@@ -44,13 +46,9 @@ export async function POST(req: NextRequest) {
 
   const db = createServiceClient();
 
-  // 1. Create the alert (sending).
   const { data: alert, error: alertErr } = await db
     .from("alerto_alerts")
-    .insert({
-      title, body, category, severity,
-      target_scope: scope, status: "sending", created_by: caller.userId,
-    })
+    .insert({ title, body, category, severity, target_scope: scope, status: "sending", created_by: caller.userId })
     .select("id")
     .single();
   if (alertErr || !alert) {
@@ -58,14 +56,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Could not create alert." }, { status: 500 });
   }
 
-  // 2. Record targets.
   if (scope === "barangays") {
     await db.from("alerto_alert_targets").insert(
       barangayIds.map((barangay_id) => ({ alert_id: alert.id, barangay_id })),
     );
   }
 
-  // 3. Resolve recipients (active Telegram subscribers, optionally by barangay).
+  // Resolve recipients (active Telegram subscribers, optionally by barangay).
   let q = db
     .from("alerto_subscribers")
     .select("id, telegram_chat_id, channel")
@@ -76,7 +73,7 @@ export async function POST(req: NextRequest) {
   const { data: recipients } = await q;
   const list = recipients ?? [];
 
-  // 4. Queue send_logs (idempotent).
+  // Queue one send_log per recipient (idempotent). destination = chat_id snapshot.
   if (list.length > 0) {
     await db.from("alerto_send_logs").upsert(
       list.map((r) => ({
@@ -90,49 +87,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 5. Send loop.
-  const msg: DeliveryMessage = { title, body, category, severity };
-  let delivered = 0;
-  let failed = 0;
-  for (const r of list) {
-    const adapter = adapterFor(r.channel);
-    const dest = r.telegram_chat_id as string;
-    const res = adapter
-      ? await adapter.send(dest, msg)
-      : { ok: false, error: `no adapter for ${r.channel}` };
+  // Send the first batch; the client continues draining until pending === 0.
+  const tally = await processBatch(alert.id);
 
-    await db
-      .from("alerto_send_logs")
-      .update({
-        status: res.ok ? "sent" : "failed",
-        provider_message_id: res.messageId ?? null,
-        error: res.error ?? null,
-      })
-      .eq("alert_id", alert.id)
-      .eq("subscriber_id", r.id);
-
-    if (res.ok) delivered++;
-    else failed++;
-  }
-
-  // 6. Finalize.
-  const status = list.length > 0 && delivered === 0 ? "failed" : "sent";
-  await db
-    .from("alerto_alerts")
-    .update({
-      status,
-      sent_at: new Date().toISOString(),
-      recipients_total: list.length,
-      delivered_count: delivered,
-      failed_count: failed,
-    })
-    .eq("id", alert.id);
-
-  return NextResponse.json({
-    id: alert.id,
-    recipients_total: list.length,
-    delivered_count: delivered,
-    failed_count: failed,
-    status,
-  });
+  return NextResponse.json({ id: alert.id, ...tally });
 }

@@ -19,7 +19,7 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bantay Alerto — City Government of Biñan",
+  title: "Bantay Alerto — Office of Councilor Titus Bautista",
   description:
     "Localized emergency and advisory alerts for Biñan, Laguna. Subscribe on Telegram to get alerts specific to your barangay.",
 };

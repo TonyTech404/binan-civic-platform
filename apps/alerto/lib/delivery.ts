@@ -38,7 +38,7 @@ export function renderTelegram(msg: DeliveryMessage): string {
     ``,
     esc(msg.body),
     ``,
-    `<i>Opisyal na abiso mula sa Pamahalaang Lungsod ng Biñan.</i>`,
+    `<i>Mula sa Tanggapan ni Konsehal Titus Bautista.</i>`,
   ].join("\n");
 }
 
