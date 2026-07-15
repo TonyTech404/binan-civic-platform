@@ -16,37 +16,66 @@ type Sub = {
   alerto_barangays: { name: string } | null;
 };
 
+const ITEMS_PER_PAGE = 5;
+// Enforcing a precise height for rows so pagination controls stay pinned statically
+const ROW_HEIGHT_CLASS = "h-[53px]"; 
+
 export default function Subscribers() {
   const { loading: authLoading } = useAdmin();
   const [rows, setRows] = React.useState<Sub[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [status, setStatus] = React.useState("active");
   const [q, setQ] = React.useState("");
+  
+  const [page, setPage] = React.useState(1);
 
   React.useEffect(() => {
     if (authLoading) return;
     supabase()
       .from("alerto_subscribers")
-      .select("id,telegram_username,full_name,phone,status,created_at,barangay_id,alerto_barangays(name)")
+      .select<string, Sub>("id, telegram_username, full_name, phone, status, created_at, barangay_id, alerto_barangays(name)")
       .order("created_at", { ascending: false })
-      .then(({ data }) => { setRows((data ?? []) as unknown as Sub[]); setLoading(false); });
+      .then(({ data }) => { 
+        setRows(data ?? []); 
+        setLoading(false); 
+      });
   }, [authLoading]);
 
-  const filtered = rows.filter((r) => {
-    if (status !== "all" && r.status !== status) return false;
-    if (q) {
-      const hay = `${r.full_name ?? ""} ${r.telegram_username ?? ""} ${r.phone ?? ""} ${r.alerto_barangays?.name ?? ""}`.toLowerCase();
-      if (!hay.includes(q.toLowerCase())) return false;
-    }
-    return true;
-  });
+  React.useEffect(() => {
+    setPage(1);
+  }, [q, status]);
+
+  const filteredRows = React.useMemo(() => {
+    return rows.filter((r) => {
+      if (status !== "all" && r.status !== status) return false;
+      if (q) {
+        const hay = `${r.full_name ?? ""} ${r.telegram_username ?? ""} ${r.phone ?? ""} ${r.alerto_barangays?.name ?? ""}`.toLowerCase();
+        if (!hay.includes(q.toLowerCase())) return false;
+      }
+      return true;
+    });
+  }, [rows, status, q]);
+
+  const paginatedRows = React.useMemo(() => {
+    const from = (page - 1) * ITEMS_PER_PAGE;
+    const to = from + ITEMS_PER_PAGE;
+    return filteredRows.slice(from, to);
+  }, [filteredRows, page]);
+
+  const totalPages = Math.ceil(filteredRows.length / ITEMS_PER_PAGE);
+  const activeCount = React.useMemo(() => rows.filter((r) => r.status === "active").length, [rows]);
+
+  // Calculate how many blank rows are needed to keep the container static
+  const emptyRowsCount = ITEMS_PER_PAGE - paginatedRows.length;
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="font-serif text-[24px] font-bold tracking-[-0.01em] text-slate-900">Subscribers</h1>
-          <p className="mt-1 text-[14px] text-slate-500">{filtered.length} ipinakita · {rows.filter((r) => r.status === "active").length} active</p>
+          <p className="mt-1 text-[14px] text-slate-500">
+            {filteredRows.length} ipinakita · {activeCount} active
+          </p>
         </div>
         <div className="flex gap-2">
           <Input placeholder="Maghanap…" value={q} onChange={(e) => setQ(e.target.value)} className="h-9 w-[180px]" />
@@ -62,38 +91,82 @@ export default function Subscribers() {
         {loading ? (
           <div className="py-16 text-center"><Spinner className="mx-auto h-6 w-6 text-slate-300" /></div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] text-left text-[13px]">
-              <thead>
-                <tr className="border-b border-slate-100 text-[10px] font-bold uppercase tracking-[0.08em] text-slate-400">
-                  <th className="px-5 py-3">Pangalan / Username</th>
-                  <th className="px-5 py-3">Barangay</th>
-                  <th className="px-5 py-3">Cellphone</th>
-                  <th className="px-5 py-3">Status</th>
-                  <th className="px-5 py-3">Sumali</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {filtered.length === 0 && (
-                  <tr><td colSpan={5} className="px-5 py-10 text-center text-slate-400">Walang subscriber na tumugma.</td></tr>
-                )}
-                {filtered.map((r) => (
-                  <tr key={r.id} className="hover:bg-slate-50">
-                    <td className="px-5 py-3">
-                      <div className="font-medium text-slate-900">{r.full_name ?? "—"}</div>
-                      {r.telegram_username && <div className="font-mono text-[11px] text-slate-400">@{r.telegram_username}</div>}
-                    </td>
-                    <td className="px-5 py-3 text-slate-700">{r.alerto_barangays?.name ?? <span className="text-slate-300">di pa napili</span>}</td>
-                    <td className="px-5 py-3 font-mono text-[12px] text-slate-600">{r.phone ?? <span className="text-slate-300">—</span>}</td>
-                    <td className="px-5 py-3">
-                      <Badge className={r.status === "active" ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-slate-200 bg-slate-50 text-slate-500"}>{r.status}</Badge>
-                    </td>
-                    <td className="px-5 py-3 text-[12px] text-slate-400">{fmtDateTime(r.created_at)}</td>
+          <>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[640px] text-left text-[13px] table-fixed">
+                <thead>
+                  <tr className="border-b border-slate-100 text-[10px] font-bold uppercase tracking-[0.08em] text-slate-400">
+                    <th className="px-5 py-3 w-[30%]">Pangalan / Username</th>
+                    <th className="px-5 py-3 w-[25%]">Barangay</th>
+                    <th className="px-5 py-3 w-[20%]">Cellphone</th>
+                    <th className="px-5 py-3 w-[12%]">Status</th>
+                    <th className="px-5 py-3 w-[13%]">Sumali</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  {filteredRows.length === 0 && (
+                    <tr className="h-[530px]">
+                      <td colSpan={5} className="px-5 text-center text-slate-400 vertical-middle">
+                        Walang subscriber na tumugma.
+                      </td>
+                    </tr>
+                  )}
+                  
+                  {/* Active Rows */}
+                  {paginatedRows.map((r) => (
+                    <tr key={r.id} className={`hover:bg-slate-50/80 ${ROW_HEIGHT_CLASS}`}>
+                      <td className="px-5 py-2 overflow-hidden truncate">
+                        <div className="font-medium text-slate-900 truncate">{r.full_name ?? "—"}</div>
+                        {r.telegram_username && <div className="font-mono text-[11px] text-slate-400 truncate">@{r.telegram_username}</div>}
+                      </td>
+                      <td className="px-5 py-2 text-slate-700 truncate">{r.alerto_barangays?.name ?? <span className="text-slate-300">di pa napili</span>}</td>
+                      <td className="px-5 py-2 font-mono text-[12px] text-slate-600 truncate">{r.phone ?? <span className="text-slate-300">—</span>}</td>
+                      <td className="px-5 py-2">
+                        <Badge className={r.status === "active" ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-slate-200 bg-slate-50 text-slate-500"}>{r.status}</Badge>
+                      </td>
+                      <td className="px-5 py-2 text-[12px] text-slate-400 truncate">{fmtDateTime(r.created_at)}</td>
+                    </tr>
+                  ))}
+
+                  {/* Layout Padding Filler Rows */}
+                  {filteredRows.length > 0 && emptyRowsCount > 0 && Array.from({ length: emptyRowsCount }).map((_, idx) => (
+                    <tr key={`empty-${idx}`} className={`${ROW_HEIGHT_CLASS} bg-transparent border-none`}>
+                      <td colSpan={5} className="px-5 py-2">&nbsp;</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Pagination Controls Footer - Stays in the exact same spot */}
+            <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50/50 px-5 py-3 text-[13px] text-slate-500 h-[52px]">
+              {totalPages > 0 ? (
+                <>
+                  <div>
+                    Page <b>{page}</b> of <b>{totalPages}</b>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      disabled={page === 1}
+                      onClick={() => setPage((p) => Math.max(p - 1, 1))}
+                      className="rounded border border-slate-200 bg-white px-3 py-1 font-medium text-slate-600 transition hover:bg-slate-50 disabled:opacity-40 disabled:hover:bg-white"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      disabled={page === totalPages}
+                      onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+                      className="rounded border border-slate-200 bg-white px-3 py-1 font-medium text-slate-600 transition hover:bg-slate-50 disabled:opacity-40 disabled:hover:bg-white"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="text-slate-400">Walang pahina</div>
+              )}
+            </div>
+          </>
         )}
       </Card>
     </div>

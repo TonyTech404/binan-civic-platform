@@ -1,18 +1,24 @@
 import { createClient } from "@supabase/supabase-js";
 
-const url  = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const url=process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const anon=process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 /**
  * Browser client — used in the admin dashboard for staff auth and for
  * RLS-protected reads (subscribers/alerts are readable only to team members).
  */
+
+if (!url || !anon) {
+  throw new Error('Missing Supabase environment variables');
+}
+
 export function createBrowserClient() {
   return createClient(url, anon, {
     auth: { persistSession: true, autoRefreshToken: true },
     realtime: { params: { eventsPerSecond: 5 } },
   });
 }
+
 
 /**
  * Server client with the service role key. Bypasses RLS — used by the Telegram
