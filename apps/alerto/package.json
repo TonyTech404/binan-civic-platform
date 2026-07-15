@@ -5,8 +5,11 @@
   "scripts": {
     "dev": "next dev -p 3002",
     "build": "next build",
-    "build:cf": "next build && opennextjs-cloudflare build",
+    "build:cf": "cp ../../.env .env.local && opennextjs-cloudflare build",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "pnpm build:cf && wrangler deploy",
+    "deploy:staging": "pnpm build:cf && wrangler deploy --env staging",
+    "deploy:prod": "pnpm build:cf && wrangler deploy --env production",
     "start": "next start -p 3002",
     "set-webhook": "node scripts/set-webhook.mjs",
     "typecheck": "tsc --noEmit"
