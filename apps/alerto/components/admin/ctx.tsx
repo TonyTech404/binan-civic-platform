@@ -75,25 +75,53 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
       setMfaSatisfied(false);
       return;
     }
-    // nextLevel === "aal2" means a verified factor exists (enrolled);
-    // currentLevel === "aal2" means this session already passed the challenge.
-    const { data } = await supabase().auth.mfa.getAuthenticatorAssuranceLevel();
-    setMfaEnrolled(data?.nextLevel === "aal2");
-    setMfaSatisfied(data?.currentLevel === "aal2");
+    try {
+      // nextLevel === "aal2" means a verified factor exists (enrolled);
+      // currentLevel === "aal2" means this session already passed the challenge.
+      const { data, error } = await supabase().auth.mfa.getAuthenticatorAssuranceLevel();
+      if (error || !data) return; // transient — keep current MFA state, don't downgrade
+      setMfaEnrolled(data.nextLevel === "aal2");
+      setMfaSatisfied(data.currentLevel === "aal2");
+    } catch {
+      // Never reject: a thrown MFA check must not brick the whole admin's loading.
+    }
   }, []);
 
   React.useEffect(() => {
     const sb = supabase();
-    sb.auth.getSession().then(async ({ data }) => {
-      setSession(data.session);
-      await Promise.all([loadRole(data.session), loadMfa(data.session)]);
-      setLoading(false);
-    });
-    const { data: sub } = sb.auth.onAuthStateChange(async (_e, s) => {
+    let active = true;
+
+    // Initial load. try/finally guarantees `loading` always clears — a thrown
+    // loadRole/loadMfa must never leave the whole admin stuck on the spinner.
+    (async () => {
+      try {
+        const { data } = await sb.auth.getSession();
+        if (!active) return;
+        setSession(data.session);
+        await Promise.all([loadRole(data.session), loadMfa(data.session)]);
+      } catch (e) {
+        console.error("admin init failed:", e);
+      } finally {
+        if (active) setLoading(false);
+      }
+    })();
+
+    const { data: sub } = sb.auth.onAuthStateChange((_e, s) => {
       setSession(s);
-      await Promise.all([loadRole(s), loadMfa(s)]);
+      // Do NOT call Supabase auth methods (getSession / mfa.*) synchronously in
+      // this callback: it runs while the auth client holds its lock, and those
+      // methods wait on the same lock → deadlock (endless loading, e.g. after a
+      // token refresh during a long broadcast). Defer the work off the lock.
+      setTimeout(() => {
+        if (!active) return;
+        Promise.all([loadRole(s), loadMfa(s)]).catch((e) => console.error("auth refresh failed:", e));
+      }, 0);
     });
-    return () => sub.subscription.unsubscribe();
+
+    // Failsafe: never leave the admin on the spinner forever.
+    const failsafe = setTimeout(() => { if (active) setLoading(false); }, 12000);
+
+    return () => { active = false; clearTimeout(failsafe); sub.subscription.unsubscribe(); };
   }, [loadRole, loadMfa]);
 
   const refresh = React.useCallback(async () => {
