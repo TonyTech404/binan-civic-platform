@@ -32,6 +32,10 @@ triage, assign departments, update status, and attach proof-of-resolution photos
 Everything runs on **Cloudflare + Supabase**. There is no separate origin
 server to operate.
 
+> **Bantay Alerto** (the alert-broadcast app in `apps/alerto`) has its own
+> detailed architecture + security overview, with diagram:
+> **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
+
 ```text
   Citizen / Staff browser
             │
