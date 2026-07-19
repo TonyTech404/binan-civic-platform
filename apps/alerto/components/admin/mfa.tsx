@@ -90,7 +90,14 @@ export function MfaEnroll() {
       for (const f of list?.all ?? []) {
         if (f.status === "unverified") await sb.auth.mfa.unenroll({ factorId: f.id });
       }
-      const { data, error } = await sb.auth.mfa.enroll({ factorType: "totp" });
+      // Explicit issuer → clean "Bantay Alerto: <email>" label in the authenticator
+      // app. Without it the issuer defaults to the request origin (e.g.
+      // "localhost:3000"), whose colon collides with otpauth's issuer:account
+      // separator and renders as a garbled, doubled label. ASCII only (no "ñ").
+      const { data, error } = await sb.auth.mfa.enroll({
+        factorType: "totp",
+        issuer: "Bantay Alerto",
+      });
       if (error) {
         setSetupError(error.message);
         return;
