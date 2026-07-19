@@ -1,0 +1,11 @@
+# CODEOWNERS — https://docs.github.com/articles/about-code-owners
+#
+# The repo owner is the code owner of everything, so every pull request
+# requires their approval before it can be merged (enforced via the branch
+# protection rule on `main`: "Require review from Code Owners").
+#
+# Note: a code owner cannot approve their own pull request. If TonyTech404
+# authors a PR, add a second owner here (or that PR must be approved by
+# another code owner) — otherwise it cannot satisfy this requirement.
+
+* @TonyTech404
