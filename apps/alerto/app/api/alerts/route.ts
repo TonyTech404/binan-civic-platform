@@ -37,8 +37,16 @@ export async function POST(req: NextRequest) {
   const body = (b.body ?? "").trim();
   const category = CATEGORIES.includes(b.category ?? "") ? b.category! : "advisory";
   const severity: Severity = SEVERITIES.includes(b.severity as Severity) ? b.severity! : "info";
-  const scope = b.target_scope === "barangays" ? "barangays" : "city";
-  const barangayIds = scope === "barangays" ? (b.barangay_ids ?? []) : [];
+  let scope = b.target_scope === "barangays" ? "barangays" : "city";
+  let barangayIds = scope === "barangays" ? (b.barangay_ids ?? []) : [];
+
+  // A barangay-scoped member may ONLY ever broadcast to their own barangay —
+  // override whatever was requested. The UI also locks this, but this is the
+  // real boundary (a scoped operator can never send city-wide or to others).
+  if (caller.barangayId) {
+    scope = "barangays";
+    barangayIds = [caller.barangayId];
+  }
 
   if (!title || !body) {
     return NextResponse.json({ error: "Title and message are required." }, { status: 400 });

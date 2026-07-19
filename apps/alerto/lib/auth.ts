@@ -17,6 +17,12 @@ export type Caller = {
    * operators can be granted it via the alerto_admins.can_approve flag.
    */
   canApprove: boolean;
+  /**
+   * Assigned barangay. null = city-wide (owners are always city-wide). When set,
+   * the member may only see/send their barangay — reads are scoped by RLS, sends
+   * are forced to this barangay in the compose route.
+   */
+  barangayId: string | null;
 };
 
 function bearer(req: NextRequest): string {
@@ -60,7 +66,7 @@ export async function getCaller(req: NextRequest): Promise<Caller | null> {
   const svc = createServiceClient();
   const { data: admin } = await svc
     .from("alerto_admins")
-    .select("user_id, email, role, can_approve")
+    .select("user_id, email, role, can_approve, barangay_id")
     .eq("user_id", userRes.user.id)
     .maybeSingle();
 
@@ -71,6 +77,7 @@ export async function getCaller(req: NextRequest): Promise<Caller | null> {
     role: admin.role as Role,
     aal: aalFromToken(token),
     canApprove: admin.role === "owner" || admin.can_approve === true,
+    barangayId: (admin.barangay_id as string | null) ?? null,
   };
 }
 

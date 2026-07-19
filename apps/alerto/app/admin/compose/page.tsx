@@ -11,7 +11,7 @@ import { CATEGORIES, CATEGORY_LABEL, SEVERITIES, SEVERITY_LABEL, SEVERITY_STYLE 
 type Brgy = { id: string; name: string; is_riverside: boolean };
 
 export default function Compose() {
-  const { role, authFetch, canApprove } = useAdmin();
+  const { role, authFetch, canApprove, barangayId } = useAdmin();
   const router = useRouter();
 
   const [barangays, setBarangays] = React.useState<Brgy[]>([]);
@@ -47,7 +47,7 @@ export default function Compose() {
   async function send() {
     setError(null);
     if (!title.trim() || !body.trim()) return setError("Kailangan ang pamagat at mensahe.");
-    if (scope === "barangays" && selected.size === 0) return setError("Pumili ng kahit isang barangay.");
+    if (!barangayId && scope === "barangays" && selected.size === 0) return setError("Pumili ng kahit isang barangay.");
 
     setSending(true);
     setProgress(null);
@@ -56,8 +56,9 @@ export default function Compose() {
         method: "POST",
         body: JSON.stringify({
           title, body, category, severity,
-          target_scope: scope,
-          barangay_ids: scope === "barangays" ? [...selected] : [],
+          // Scoped members always target their own barangay (server enforces too).
+          target_scope: barangayId ? "barangays" : scope,
+          barangay_ids: barangayId ? [barangayId] : (scope === "barangays" ? [...selected] : []),
         }),
       });
       let data = await res.json().catch(() => null);
@@ -186,10 +187,16 @@ export default function Compose() {
           {/* Targeting */}
           <Card className="p-5">
             <Label>Sino ang makakatanggap?</Label>
-            <div className="grid grid-cols-2 gap-3">
-              <ScopeButton active={scope === "city"} onClick={() => setScope("city")} title="Buong Lungsod" desc="Lahat ng active subscriber" />
-              <ScopeButton active={scope === "barangays"} onClick={() => setScope("barangays")} title="Piling Barangay" desc="Piliin ang mga apektadong lugar" />
-            </div>
+            {barangayId ? (
+              <div className="rounded-md border border-brand-200 bg-brand-50 px-4 py-3 text-[13px] leading-[1.5] text-brand-800">
+                Naka-assign ka sa <b>{barangays.find((b) => b.id === barangayId)?.name ?? "iyong barangay"}</b> — dito lamang padadalhin ang lahat ng iyong alerto.
+              </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 gap-3">
+                  <ScopeButton active={scope === "city"} onClick={() => setScope("city")} title="Buong Lungsod" desc="Lahat ng active subscriber" />
+                  <ScopeButton active={scope === "barangays"} onClick={() => setScope("barangays")} title="Piling Barangay" desc="Piliin ang mga apektadong lugar" />
+                </div>
 
             {scope === "barangays" && (
               <div className="mt-4">
@@ -212,6 +219,8 @@ export default function Compose() {
                   })}
                 </div>
               </div>
+            )}
+              </>
             )}
           </Card>
 

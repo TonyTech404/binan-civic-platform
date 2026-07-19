@@ -1,12 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { useAdmin } from "@/components/admin/ctx";
+import { useAdmin, supabase } from "@/components/admin/ctx";
 import { can, ROLES, ROLE_LABEL, ROLE_DESCRIPTION, type Role } from "@/lib/rbac";
 import { Card, Button, Input, Select, Label, Badge, Spinner } from "@/components/ui";
 import { fmtDateTime } from "@/lib/utils";
 
-type Member = { user_id: string; email: string; full_name: string | null; role: Role; can_approve: boolean; created_at: string };
+type Member = { user_id: string; email: string; full_name: string | null; role: Role; can_approve: boolean; barangay_id: string | null; alerto_barangays: { name: string } | null; created_at: string };
+type Brgy = { id: string; name: string };
 
 const ROLE_STYLE: Record<Role, string> = {
   owner: "border-brand-200 bg-brand-50 text-brand-700",
@@ -18,6 +19,7 @@ export default function Team() {
   const { role, authFetch } = useAdmin();
   const manage = can(role, "team:manage");
   const [members, setMembers] = React.useState<Member[]>([]);
+  const [barangays, setBarangays] = React.useState<Brgy[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [notice, setNotice] = React.useState<string | null>(null);
 
@@ -29,6 +31,10 @@ export default function Team() {
   }, [authFetch]);
 
   React.useEffect(() => { load(); }, [load]);
+  React.useEffect(() => {
+    supabase().from("alerto_barangays").select("id,name").order("name")
+      .then(({ data }) => setBarangays((data ?? []) as Brgy[]));
+  }, []);
 
   async function changeRole(user_id: string, newRole: Role) {
     const res = await authFetch("/api/team", { method: "PATCH", body: JSON.stringify({ user_id, role: newRole }) });
@@ -46,6 +52,12 @@ export default function Team() {
   async function toggleApprove(user_id: string, next: boolean) {
     const res = await authFetch("/api/team", { method: "PATCH", body: JSON.stringify({ user_id, can_approve: next }) });
     if (!res.ok) { const d = await res.json().catch(() => ({})); setNotice(d.error ?? "Hindi na-update ang approver."); return; }
+    load();
+  }
+
+  async function changeBarangay(user_id: string, barangay_id: string | null) {
+    const res = await authFetch("/api/team", { method: "PATCH", body: JSON.stringify({ user_id, barangay_id }) });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); setNotice(d.error ?? "Hindi na-update ang barangay."); return; }
     load();
   }
 
@@ -89,6 +101,21 @@ export default function Team() {
                   </Select>
                 ) : (
                   <Badge className={ROLE_STYLE[m.role]}>{ROLE_LABEL[m.role]}</Badge>
+                )}
+                {/* Barangay assignment — owners are always city-wide. */}
+                {m.role === "owner" ? (
+                  <span className="text-[11px] font-medium text-slate-400">City-wide</span>
+                ) : manage ? (
+                  <Select
+                    value={m.barangay_id ?? ""}
+                    onChange={(e) => changeBarangay(m.user_id, e.target.value || null)}
+                    className="h-9 w-[150px]"
+                  >
+                    <option value="">City-wide</option>
+                    {barangays.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+                  </Select>
+                ) : (
+                  <span className="text-[11px] font-medium text-slate-500">{m.alerto_barangays?.name ?? "City-wide"}</span>
                 )}
                 {/* Approver control — owners always approve; operators can be granted it. */}
                 {m.role === "owner" ? (
