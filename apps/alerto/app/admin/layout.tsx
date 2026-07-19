@@ -12,8 +12,21 @@ import { can, ROLE_LABEL, type Permission } from "@/lib/rbac";
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <AdminProvider>
+      <StagingBanner />
       <Shell>{children}</Shell>
     </AdminProvider>
+  );
+}
+
+// Loud, unmissable marker on the staging deploy — it shares the live database,
+// so this warns staff not to broadcast real alerts from here. Rendered only when
+// the build set NEXT_PUBLIC_APP_ENV=staging (prod builds don't, so it's hidden).
+function StagingBanner() {
+  if (process.env.NEXT_PUBLIC_APP_ENV !== "staging") return null;
+  return (
+    <div className="fixed inset-x-0 top-0 z-[100] bg-amber-500 py-1 text-center text-[11px] font-bold uppercase tracking-[0.1em] text-white">
+      Staging · shared live data — huwag mag-broadcast ng totoong alerto
+    </div>
   );
 }
 
