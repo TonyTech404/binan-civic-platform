@@ -43,6 +43,13 @@ export default function Team() {
     load();
   }
 
+  async function resetMfa(user_id: string, email: string) {
+    if (!confirm(`I-reset ang 2-step verification ni ${email}? Mag-se-setup siya ulit sa susunod na login.`)) return;
+    const res = await authFetch("/api/team/reset-mfa", { method: "POST", body: JSON.stringify({ user_id }) });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); setNotice(d.error ?? "Hindi na-reset ang MFA."); return; }
+    setNotice(`Na-reset ang 2-step verification ni ${email}. Mag-se-setup siya ulit sa susunod na login.`);
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -76,6 +83,9 @@ export default function Team() {
                   </Select>
                 ) : (
                   <Badge className={ROLE_STYLE[m.role]}>{ROLE_LABEL[m.role]}</Badge>
+                )}
+                {manage && (
+                  <button onClick={() => resetMfa(m.user_id, m.email)} className="text-[12px] font-semibold text-slate-400 hover:text-brand-600">Reset MFA</button>
                 )}
                 {manage && (
                   <button onClick={() => remove(m.user_id, m.email)} className="text-[12px] font-semibold text-slate-400 hover:text-brand-600">Alisin</button>
