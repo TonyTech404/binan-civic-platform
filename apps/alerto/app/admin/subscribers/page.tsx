@@ -51,10 +51,14 @@ export default function Subscribers() {
 
   React.useEffect(() => {
     if (authLoading) return;
+    // Guard against stale responses: if the deps change (new page/filter/search)
+    // before an in-flight request resolves, ignore its result so a slower earlier
+    // request can't overwrite the UI with newer data.
+    let ignore = false;
 
     async function fetchData() {
       setLoading(true);
-      
+
       const from = (page - 1) * ITEMS_PER_PAGE;
       const to = from + ITEMS_PER_PAGE - 1;
 
@@ -64,6 +68,7 @@ export default function Subscribers() {
         .select("*", { count: "exact", head: true })
         .eq("status", "active");
 
+      if (ignore) return;
       setActiveCount(activeDbCount ?? 0);
 
       // 2. Resolve Barangay text search at the application layer if needed
@@ -73,7 +78,8 @@ export default function Subscribers() {
           .from("alerto_barangays")
           .select("id")
           .ilike("name", `%${debouncedQ}%`);
-        
+
+        if (ignore) return;
         if (brgys && brgys.length > 0) {
           matchingBarangayIds = brgys.map((b) => b.id);
         }
@@ -93,13 +99,18 @@ export default function Subscribers() {
 
       // Apply Multi-Column Search
       if (debouncedQ) {
-        let orFilter = `full_name.ilike.%${debouncedQ}%,telegram_username.ilike.%${debouncedQ}%,phone.ilike.%${debouncedQ}%`;
-        
+        // Wrap each value in double quotes so PostgREST treats commas/parentheses in
+        // the search term as literal text instead of or()-filter syntax — an unquoted
+        // "Cruz, Jr." would otherwise split the filter and error the whole query.
+        // Strip any double quotes/backslashes first so the value can't break out.
+        const safeQ = debouncedQ.replace(/["\\]/g, "");
+        let orFilter = `full_name.ilike."%${safeQ}%",telegram_username.ilike."%${safeQ}%",phone.ilike."%${safeQ}%"`;
+
         if (matchingBarangayIds.length > 0) {
           const idListString = matchingBarangayIds.join(",");
           orFilter += `,barangay_id.in.(${idListString})`;
         }
-        
+
         query = query.or(orFilter);
       }
 
@@ -107,7 +118,10 @@ export default function Subscribers() {
         .order("created_at", { ascending: false })
         .range(from, to);
 
-      if (!error) {
+      if (ignore) return;
+      if (error) {
+        console.error("Failed to load subscribers:", error.message);
+      } else {
         setRows(data ?? []);
         setTotalCount(count ?? 0);
       }
@@ -115,6 +129,9 @@ export default function Subscribers() {
     }
 
     fetchData();
+    return () => {
+      ignore = true;
+    };
   }, [authLoading, page, status, debouncedQ]);
 
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
