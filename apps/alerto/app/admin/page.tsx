@@ -24,25 +24,30 @@ export default function Dashboard() {
   React.useEffect(() => {
     if (authLoading) return;
     (async () => {
-      const sb = supabase();
-      const [{ count: active }, { count: phones }, subs, recent] = await Promise.all([
-        sb.from("alerto_subscribers").select("id", { count: "exact", head: true }).eq("status", "active"),
-        sb.from("alerto_subscribers").select("id", { count: "exact", head: true }).eq("status", "active").not("phone", "is", null),
-        sb.from("alerto_subscribers").select("barangay_id, alerto_barangays(name)").eq("status", "active"),
-        sb.from("alerto_alerts").select("id,title,severity,status,target_scope,created_at,recipients_total,delivered_count,failed_count").order("created_at", { ascending: false }).limit(8),
-      ]);
+      try {
+        const sb = supabase();
+        const [{ count: active }, { count: phones }, subs, recent] = await Promise.all([
+          sb.from("alerto_subscribers").select("id", { count: "exact", head: true }).eq("status", "active"),
+          sb.from("alerto_subscribers").select("id", { count: "exact", head: true }).eq("status", "active").not("phone", "is", null),
+          sb.from("alerto_subscribers").select("barangay_id, alerto_barangays(name)").eq("status", "active"),
+          sb.from("alerto_alerts").select("id,title,severity,status,target_scope,created_at,recipients_total,delivered_count,failed_count").order("created_at", { ascending: false }).limit(8),
+        ]);
 
-      setActiveSubs(active ?? 0);
-      setWithPhone(phones ?? 0);
+        setActiveSubs(active ?? 0);
+        setWithPhone(phones ?? 0);
 
-      const map = new Map<string, number>();
-      for (const row of (subs.data ?? []) as { alerto_barangays?: { name?: string } }[]) {
-        const name = row.alerto_barangays?.name ?? "— (di pa napili)";
-        map.set(name, (map.get(name) ?? 0) + 1);
+        const map = new Map<string, number>();
+        for (const row of (subs.data ?? []) as { alerto_barangays?: { name?: string } }[]) {
+          const name = row.alerto_barangays?.name ?? "— (di pa napili)";
+          map.set(name, (map.get(name) ?? 0) + 1);
+        }
+        setByBarangay([...map.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count));
+        setAlerts((recent.data ?? []) as Alert[]);
+      } catch (e) {
+        console.error("dashboard load failed:", e);
+      } finally {
+        setLoading(false); // don't strand the dashboard on the spinner
       }
-      setByBarangay([...map.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count));
-      setAlerts((recent.data ?? []) as Alert[]);
-      setLoading(false);
     })();
   }, [authLoading]);
 

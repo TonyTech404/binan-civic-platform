@@ -51,35 +51,40 @@ export default function Compose() {
 
     setSending(true);
     setProgress(null);
-    const res = await authFetch("/api/alerts", {
-      method: "POST",
-      body: JSON.stringify({
-        title, body, category, severity,
-        target_scope: scope,
-        barangay_ids: scope === "barangays" ? [...selected] : [],
-      }),
-    });
-    let data = await res.json().catch(() => null);
-    if (!res.ok || !data) { setSending(false); return setError((data && data.error) || "Hindi naipadala ang alerto."); }
+    try {
+      const res = await authFetch("/api/alerts", {
+        method: "POST",
+        body: JSON.stringify({
+          title, body, category, severity,
+          target_scope: scope,
+          barangay_ids: scope === "barangays" ? [...selected] : [],
+        }),
+      });
+      let data = await res.json().catch(() => null);
+      if (!res.ok || !data) { setError((data && data.error) || "Hindi naipadala ang alerto."); return; }
 
-    // Not an approver → the alert is queued for review, nothing is broadcast.
-    if (data.pending_approval) { setSending(false); setSubmitted({ id: data.id }); return; }
+      // Not an approver → the alert is queued for review, nothing is broadcast.
+      if (data.pending_approval) { setSubmitted({ id: data.id }); return; }
 
-    setProgress({ sent: data.sent, total: data.total });
-
-    // Drain the rest in batches — each request stays under Cloudflare's send limit.
-    let guard = 0;
-    while (data.pending > 0 && guard < 300) {
-      guard++;
-      const r = await authFetch(`/api/alerts/${data.id}/send`, { method: "POST" });
-      const d = await r.json().catch(() => null);
-      if (!r.ok || !d) break;
-      data = d;
       setProgress({ sent: data.sent, total: data.total });
-      if (d.processed === 0) break;
+
+      // Drain the rest in batches — each request stays under Cloudflare's send limit.
+      let guard = 0;
+      while (data.pending > 0 && guard < 300) {
+        guard++;
+        const r = await authFetch(`/api/alerts/${data.id}/send`, { method: "POST" });
+        const d = await r.json().catch(() => null);
+        if (!r.ok || !d) break;
+        data = d;
+        setProgress({ sent: data.sent, total: data.total });
+        if (d.processed === 0) break;
+      }
+      setResult(data);
+    } catch {
+      setError("Hindi naipadala ang alerto (may problema sa koneksyon). Subukan muli.");
+    } finally {
+      setSending(false); // never leave the screen stuck on the sending spinner
     }
-    setSending(false);
-    setResult(data);
   }
 
   if (sending) {
