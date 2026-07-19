@@ -27,3 +27,20 @@ custom_domain = true
 [[routes]]
 pattern = "bantay-alerto.buildwithanthony.com"
 custom_domain = true
+
+# ── Staging ──────────────────────────────────────────────────
+# Manual deploy: `pnpm run deploy:staging`. A separate Worker on a *.workers.dev
+# URL (no custom routes) that SHARES the prod Supabase — preview UI/flows only,
+# do NOT broadcast real alerts from here. Secrets are set separately on this
+# worker (wrangler secret put --env staging). vars are not inherited, so repeat.
+[env.staging]
+name = "bantay-alerto-staging"
+# Do NOT inherit the prod custom domains — staging lives on its *.workers.dev URL.
+routes = []
+workers_dev = true
+
+[env.staging.vars]
+NEXT_PUBLIC_SUPABASE_URL          = "https://eykcrbselytwsprqbfki.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY     = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5a2NyYnNlbHl0d3NwcnFiZmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExNDcyNDgsImV4cCI6MjA5NjcyMzI0OH0.Ges6T2U07WaU0PhPx0J4yxp8MjKFo-LDYfrD41OA0fA"
+NEXT_PUBLIC_TELEGRAM_BOT_USERNAME = "BinanAlertoBot"
+NEXT_PUBLIC_APP_ENV               = "staging"

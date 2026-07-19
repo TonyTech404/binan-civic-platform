@@ -7,6 +7,7 @@
     "build": "next build",
     "build:cf": "next build && opennextjs-cloudflare build",
     "deploy": "pnpm build:cf && wrangler deploy",
+    "deploy:staging": "NEXT_PUBLIC_APP_ENV=staging pnpm build:cf && wrangler deploy --env staging",
     "start": "next start -p 3002",
     "set-webhook": "node scripts/set-webhook.mjs",
     "typecheck": "tsc --noEmit"
