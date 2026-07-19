@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   const db = createServiceClient();
   const { data } = await db
     .from("alerto_admins")
-    .select("user_id, email, full_name, role, created_at")
+    .select("user_id, email, full_name, role, can_approve, created_at")
     .order("created_at");
   return NextResponse.json({ members: data ?? [] });
 }
@@ -67,21 +67,36 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ user_id: user.id, email: em, role, created });
 }
 
-// PATCH — change a member's role (team:manage)
+// PATCH — change a member's role and/or approver flag (team:manage).
+// Body: { user_id, role?, can_approve? } — either or both.
 export async function PATCH(req: NextRequest) {
   const caller = await requirePermission(req, "team:manage");
   if (!caller) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
-  const { user_id, role } = (await req.json()) as { user_id?: string; role?: Role };
-  if (!user_id || !ROLES.includes(role as Role)) {
-    return NextResponse.json({ error: "user_id and valid role required." }, { status: 400 });
-  }
+  const { user_id, role, can_approve } = (await req.json()) as {
+    user_id?: string; role?: Role; can_approve?: boolean;
+  };
+  if (!user_id) return NextResponse.json({ error: "user_id required." }, { status: 400 });
 
   const db = createServiceClient();
-  if (role !== "owner" && (await isLastOwner(db, user_id))) {
-    return NextResponse.json({ error: "Cannot demote the last owner." }, { status: 409 });
+  const update: { role?: Role; can_approve?: boolean } = {};
+
+  if (role !== undefined) {
+    if (!ROLES.includes(role)) {
+      return NextResponse.json({ error: "Valid role required." }, { status: 400 });
+    }
+    if (role !== "owner" && (await isLastOwner(db, user_id))) {
+      return NextResponse.json({ error: "Cannot demote the last owner." }, { status: 409 });
+    }
+    update.role = role;
   }
-  await db.from("alerto_admins").update({ role }).eq("user_id", user_id);
+  if (typeof can_approve === "boolean") update.can_approve = can_approve;
+
+  if (Object.keys(update).length === 0) {
+    return NextResponse.json({ error: "Nothing to update." }, { status: 400 });
+  }
+
+  await db.from("alerto_admins").update(update).eq("user_id", user_id);
   return NextResponse.json({ ok: true });
 }
 

@@ -13,6 +13,58 @@ const CONCURRENCY = 8;   // parallel sends per wave (safely under Telegram's ~30
 // Such subscribers get flagged so future broadcasts skip them.
 const PERMANENT = /blocked|deactivated|chat not found|user is deactivated|bot was kicked/i;
 
+/**
+ * Resolve an alert's recipients (active Telegram subscribers, optionally scoped
+ * to its target barangays) and queue one pending send_log per recipient. Reads
+ * the target scope from the alert row + alerto_alert_targets, so it works both
+ * when an approver sends directly and when an alert is broadcast at approval
+ * time (recipients are snapshotted at send, not at compose). Idempotent.
+ */
+export async function queueRecipients(alertId: string): Promise<number> {
+  const db = createServiceClient();
+
+  const { data: alert } = await db
+    .from("alerto_alerts")
+    .select("id,target_scope")
+    .eq("id", alertId)
+    .maybeSingle();
+  if (!alert) return 0;
+
+  let barangayIds: string[] = [];
+  if (alert.target_scope === "barangays") {
+    const { data: targets } = await db
+      .from("alerto_alert_targets")
+      .select("barangay_id")
+      .eq("alert_id", alertId);
+    barangayIds = (targets ?? []).map((t) => t.barangay_id as string);
+    if (barangayIds.length === 0) return 0;
+  }
+
+  let q = db
+    .from("alerto_subscribers")
+    .select("id, telegram_chat_id, channel")
+    .eq("status", "active")
+    .eq("channel", "telegram")
+    .not("telegram_chat_id", "is", null);
+  if (alert.target_scope === "barangays") q = q.in("barangay_id", barangayIds);
+
+  const { data: recipients } = await q;
+  const list = recipients ?? [];
+  if (list.length > 0) {
+    await db.from("alerto_send_logs").upsert(
+      list.map((r) => ({
+        alert_id: alertId,
+        subscriber_id: r.id,
+        channel: r.channel,
+        destination: r.telegram_chat_id as string,
+        status: "pending",
+      })),
+      { onConflict: "alert_id,subscriber_id" },
+    );
+  }
+  return list.length;
+}
+
 export type Tally = {
   ok: boolean;
   error?: string;

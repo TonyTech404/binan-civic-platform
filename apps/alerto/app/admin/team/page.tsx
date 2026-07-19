@@ -6,7 +6,7 @@ import { can, ROLES, ROLE_LABEL, ROLE_DESCRIPTION, type Role } from "@/lib/rbac"
 import { Card, Button, Input, Select, Label, Badge, Spinner } from "@/components/ui";
 import { fmtDateTime } from "@/lib/utils";
 
-type Member = { user_id: string; email: string; full_name: string | null; role: Role; created_at: string };
+type Member = { user_id: string; email: string; full_name: string | null; role: Role; can_approve: boolean; created_at: string };
 
 const ROLE_STYLE: Record<Role, string> = {
   owner: "border-brand-200 bg-brand-50 text-brand-700",
@@ -40,6 +40,12 @@ export default function Team() {
     if (!confirm(`Alisin si ${email} sa team?`)) return;
     const res = await authFetch("/api/team", { method: "DELETE", body: JSON.stringify({ user_id }) });
     if (!res.ok) { const d = await res.json().catch(() => ({})); setNotice(d.error ?? "Hindi naalis."); return; }
+    load();
+  }
+
+  async function toggleApprove(user_id: string, next: boolean) {
+    const res = await authFetch("/api/team", { method: "PATCH", body: JSON.stringify({ user_id, can_approve: next }) });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); setNotice(d.error ?? "Hindi na-update ang approver."); return; }
     load();
   }
 
@@ -84,6 +90,18 @@ export default function Team() {
                 ) : (
                   <Badge className={ROLE_STYLE[m.role]}>{ROLE_LABEL[m.role]}</Badge>
                 )}
+                {/* Approver control — owners always approve; operators can be granted it. */}
+                {m.role === "owner" ? (
+                  <span title="Owners can always approve" className="rounded border border-emerald-200 bg-emerald-50 px-2 py-1 text-[11px] font-semibold text-emerald-700">Approver</span>
+                ) : manage && m.role !== "viewer" ? (
+                  <button
+                    onClick={() => toggleApprove(m.user_id, !m.can_approve)}
+                    title="Pwedeng mag-approve ng alerto bago ipadala"
+                    className={"rounded border px-2 py-1 text-[11px] font-semibold transition-colors " + (m.can_approve ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-slate-200 text-slate-400 hover:bg-slate-50")}
+                  >
+                    {m.can_approve ? "✓ Approver" : "Approver"}
+                  </button>
+                ) : null}
                 {manage && (
                   <button onClick={() => resetMfa(m.user_id, m.email)} className="text-[12px] font-semibold text-slate-400 hover:text-brand-600">Reset MFA</button>
                 )}

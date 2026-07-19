@@ -17,6 +17,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({
     role: caller?.role ?? null,
     email: caller?.email ?? null,
+    canApprove: caller?.canApprove ?? false,
     teamEmpty: (count ?? 0) === 0,
   });
 }

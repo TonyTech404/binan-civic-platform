@@ -1,0 +1,4 @@
+-- Placeholder for pre-existing remote migration 20260711000001.
+-- Its definitions live only in the remote DB; this stub keeps local history in
+-- sync so `supabase db push` can apply later local migrations. Same pattern as
+-- the 20260611* prototype stubs. DO NOT rely on this file to reproduce schema.
