@@ -1,0 +1,57 @@
+name: Deploy
+
+# Manual ("Run workflow") deploy to Cloudflare — the CI/CD alternative to
+# deploying locally with `pnpm --filter @bantay/alerto deploy`. Kept manual so a
+# push to main never auto-deploys; you choose when. To auto-deploy on merge,
+# add a `push: { branches: [main] }` trigger.
+#
+# Requires (Settings → Secrets and variables → Actions):
+#   secret   CLOUDFLARE_API_TOKEN   — Cloudflare token with "Edit Cloudflare Workers"
+#   variable CLOUDFLARE_ACCOUNT_ID  — already set
+#   variable NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY — already set
+# The Worker's runtime secrets (service role, bot token, webhook secret) are
+# already stored on the Worker and are NOT overwritten by a deploy.
+
+on:
+  workflow_dispatch:
+    inputs:
+      app:
+        description: "App to deploy"
+        type: choice
+        options:
+          - alerto
+        default: alerto
+
+concurrency:
+  group: deploy-${{ github.event.inputs.app }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy ${{ github.event.inputs.app }} to Cloudflare
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build for Cloudflare
+        run: pnpm --filter @bantay/${{ github.event.inputs.app }} build:cf
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+      - name: Deploy (wrangler)
+        run: pnpm --filter @bantay/${{ github.event.inputs.app }} exec wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
