@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { AdminProvider, useAdmin } from "@/components/admin/ctx";
+import { MfaEnroll, MfaChallenge } from "@/components/admin/mfa";
 import { Seal } from "@/components/Seal";
 import { Button, Spinner } from "@/components/ui";
 import { can, ROLE_LABEL, type Permission } from "@/lib/rbac";
@@ -25,7 +26,7 @@ function FullSpinner() {
 }
 
 function Shell({ children }: { children: React.ReactNode }) {
-  const { loading, session, role, teamEmpty } = useAdmin();
+  const { loading, session, role, teamEmpty, mfaEnrolled, mfaSatisfied } = useAdmin();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -38,6 +39,10 @@ function Shell({ children }: { children: React.ReactNode }) {
   if (isLogin) return <>{children}</>;
   if (loading) return <FullSpinner />;
   if (!session) return <FullSpinner />;
+  // MFA gate — enforced before authorization. The server independently requires
+  // aal2 on every sensitive route, so this is UX, not the security boundary.
+  if (!mfaEnrolled) return <MfaEnroll />;
+  if (!mfaSatisfied) return <MfaChallenge />;
   if (!role) return <NoAccess teamEmpty={teamEmpty} />;
 
   return <Chrome>{children}</Chrome>;

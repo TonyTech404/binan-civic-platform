@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient, createTokenClient } from "@/lib/supabase";
+import { aalFromToken } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +15,12 @@ export async function POST(req: NextRequest) {
   const { data: userRes, error } = await createTokenClient(token).auth.getUser();
   if (error || !userRes?.user) {
     return NextResponse.json({ error: "Invalid session" }, { status: 401 });
+  }
+
+  // The first owner must have MFA enabled before claiming access — otherwise
+  // the most privileged account on the platform would be password-only.
+  if (aalFromToken(token) !== "aal2") {
+    return NextResponse.json({ error: "Complete MFA setup first." }, { status: 403 });
   }
 
   const db = createServiceClient();
