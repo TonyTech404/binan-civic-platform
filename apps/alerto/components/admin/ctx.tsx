@@ -15,6 +15,8 @@ export function supabase() {
 type AdminState = {
   session: Session | null;
   role: Role | null;
+  /** May approve/reject pending alerts (owner or granted can_approve). */
+  canApprove: boolean;
   teamEmpty: boolean;
   loading: boolean;
   /** The session has a verified TOTP factor (the user has set up MFA). */
@@ -40,6 +42,7 @@ export function useAdmin(): AdminState {
 export function AdminProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = React.useState<Session | null>(null);
   const [role, setRole] = React.useState<Role | null>(null);
+  const [canApprove, setCanApprove] = React.useState(false);
   const [teamEmpty, setTeamEmpty] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [mfaEnrolled, setMfaEnrolled] = React.useState(false);
@@ -48,6 +51,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   const loadRole = React.useCallback(async (s: Session | null) => {
     if (!s) {
       setRole(null);
+      setCanApprove(false);
       setTeamEmpty(false);
       return;
     }
@@ -57,9 +61,11 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
       });
       const data = await res.json();
       setRole(data.role ?? null);
+      setCanApprove(!!data.canApprove);
       setTeamEmpty(!!data.teamEmpty);
     } catch {
       setRole(null);
+      setCanApprove(false);
     }
   }, []);
 
@@ -105,6 +111,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     await supabase().auth.signOut();
     setSession(null);
     setRole(null);
+    setCanApprove(false);
     setMfaEnrolled(false);
     setMfaSatisfied(false);
   }, []);
@@ -124,7 +131,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   );
 
   const value: AdminState = {
-    session, role, teamEmpty, loading, mfaEnrolled, mfaSatisfied,
+    session, role, canApprove, teamEmpty, loading, mfaEnrolled, mfaSatisfied,
     refresh, refreshMfa, signOut, authFetch,
   };
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

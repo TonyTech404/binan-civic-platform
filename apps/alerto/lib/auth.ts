@@ -12,6 +12,11 @@ export type Caller = {
    * password only.
    */
   aal: string | null;
+  /**
+   * Whether this caller may approve alerts before broadcast. Owners always can;
+   * operators can be granted it via the alerto_admins.can_approve flag.
+   */
+  canApprove: boolean;
 };
 
 function bearer(req: NextRequest): string {
@@ -55,7 +60,7 @@ export async function getCaller(req: NextRequest): Promise<Caller | null> {
   const svc = createServiceClient();
   const { data: admin } = await svc
     .from("alerto_admins")
-    .select("user_id, email, role")
+    .select("user_id, email, role, can_approve")
     .eq("user_id", userRes.user.id)
     .maybeSingle();
 
@@ -65,7 +70,21 @@ export async function getCaller(req: NextRequest): Promise<Caller | null> {
     email: admin.email,
     role: admin.role as Role,
     aal: aalFromToken(token),
+    canApprove: admin.role === "owner" || admin.can_approve === true,
   };
+}
+
+/**
+ * Guard for approval actions (approve/reject a pending alert). Returns the
+ * caller only if they may approve AND completed MFA (aal2). Approval rights come
+ * from role (owner) or the can_approve flag — this is the server-side boundary,
+ * separate from who may compose.
+ */
+export async function requireApprover(req: NextRequest): Promise<Caller | null> {
+  const caller = await getCaller(req);
+  if (!caller || !caller.canApprove) return null;
+  if (caller.aal !== "aal2") return null;
+  return caller;
 }
 
 /**

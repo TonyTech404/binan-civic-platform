@@ -57,9 +57,22 @@ const NAV: { href: string; label: string; perm: Permission | null }[] = [
 ];
 
 function Chrome({ children }: { children: React.ReactNode }) {
-  const { session, role, signOut } = useAdmin();
+  const { session, role, signOut, canApprove, authFetch } = useAdmin();
   const pathname = usePathname();
   const router = useRouter();
+
+  // Pending-approval count for the nav badge (approvers only). Refreshes on
+  // navigation so it clears after you approve/reject on the Approvals page.
+  const [pendingCount, setPendingCount] = React.useState(0);
+  React.useEffect(() => {
+    if (!canApprove) return;
+    let ignore = false;
+    authFetch("/api/alerts/pending")
+      .then((r) => r.json())
+      .then((d) => { if (!ignore) setPendingCount((d?.alerts ?? []).length); })
+      .catch(() => {});
+    return () => { ignore = true; };
+  }, [canApprove, authFetch, pathname]);
 
   async function handleSignOut() {
     await signOut();
@@ -115,6 +128,24 @@ function Chrome({ children }: { children: React.ReactNode }) {
               </Link>
             );
           })}
+          {canApprove && (
+            <Link
+              href="/admin/approvals"
+              className={
+                "flex items-center gap-1.5 border-b-2 px-3 py-2.5 text-[13px] font-semibold whitespace-nowrap transition-colors " +
+                (pathname === "/admin/approvals"
+                  ? "border-brand-600 text-brand-600"
+                  : "border-transparent text-slate-500 hover:text-slate-900")
+              }
+            >
+              Approvals
+              {pendingCount > 0 && (
+                <span className="inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] font-bold text-white">
+                  {pendingCount}
+                </span>
+              )}
+            </Link>
+          )}
         </nav>
       </header>
 

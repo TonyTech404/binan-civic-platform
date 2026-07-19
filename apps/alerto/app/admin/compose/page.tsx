@@ -11,7 +11,7 @@ import { CATEGORIES, CATEGORY_LABEL, SEVERITIES, SEVERITY_LABEL, SEVERITY_STYLE 
 type Brgy = { id: string; name: string; is_riverside: boolean };
 
 export default function Compose() {
-  const { role, authFetch } = useAdmin();
+  const { role, authFetch, canApprove } = useAdmin();
   const router = useRouter();
 
   const [barangays, setBarangays] = React.useState<Brgy[]>([]);
@@ -25,6 +25,7 @@ export default function Compose() {
   const [progress, setProgress] = React.useState<{ sent: number; total: number } | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [result, setResult] = React.useState<{ id: string; total: number; sent: number; failed: number; pending: number } | null>(null);
+  const [submitted, setSubmitted] = React.useState<{ id: string } | null>(null);
 
   React.useEffect(() => {
     supabase().from("alerto_barangays").select("id,name,is_riverside").order("name")
@@ -60,6 +61,10 @@ export default function Compose() {
     });
     let data = await res.json().catch(() => null);
     if (!res.ok || !data) { setSending(false); return setError((data && data.error) || "Hindi naipadala ang alerto."); }
+
+    // Not an approver → the alert is queued for review, nothing is broadcast.
+    if (data.pending_approval) { setSending(false); setSubmitted({ id: data.id }); return; }
+
     setProgress({ sent: data.sent, total: data.total });
 
     // Drain the rest in batches — each request stays under Cloudflare's send limit.
@@ -81,9 +86,31 @@ export default function Compose() {
     return (
       <div className="mx-auto max-w-[520px] py-16 text-center">
         <Spinner className="mx-auto h-8 w-8 text-brand-600" />
-        <h1 className="mt-4 font-serif text-[22px] font-bold text-slate-900">Ipinapadala ang alerto…</h1>
-        <p className="mt-2 font-mono text-[15px] text-slate-600">{progress ? `${progress.sent} / ${progress.total}` : "Inihahanda…"}</p>
+        <h1 className="mt-4 font-serif text-[22px] font-bold text-slate-900">
+          {canApprove ? "Ipinapadala ang alerto…" : "Isinusumite…"}
+        </h1>
+        {canApprove && (
+          <p className="mt-2 font-mono text-[15px] text-slate-600">{progress ? `${progress.sent} / ${progress.total}` : "Inihahanda…"}</p>
+        )}
         <p className="mt-2 text-[12.5px] text-slate-400">Huwag munang isara ang tab hangga't hindi tapos.</p>
+      </div>
+    );
+  }
+
+  if (submitted) {
+    return (
+      <div className="mx-auto max-w-[520px] py-10 text-center">
+        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-violet-50 text-2xl">🕓</div>
+        <h1 className="font-serif text-[24px] font-bold text-slate-900">Naisumite para sa approval</h1>
+        <p className="mt-2 text-[14px] leading-[1.55] text-slate-600">
+          Ipapadala lamang ang alerto kapag <b>inaprubahan ng owner o approver</b>. Makikita mo ang status sa History.
+        </p>
+        <div className="mt-6 flex justify-center gap-3">
+          <Link href="/admin/alerts"><Button variant="outline">Tingnan sa History</Button></Link>
+          <Button onClick={() => { setSubmitted(null); setTitle(""); setBody(""); setSelected(new Set()); }}>
+            Bumuo ng bago
+          </Button>
+        </div>
       </div>
     );
   }
@@ -183,10 +210,15 @@ export default function Compose() {
             )}
           </Card>
 
+          {!canApprove && (
+            <p className="rounded-md border-l-[3px] border-l-violet-400 bg-violet-50 px-3.5 py-2.5 text-[12.5px] leading-[1.5] text-violet-800">
+              Ang iyong alerto ay <b>ipapadala lang pagkatapos aprubahan</b> ng owner o approver.
+            </p>
+          )}
           {error && <p className="text-[13px] font-medium text-brand-600">{error}</p>}
           <Button size="lg" onClick={send} disabled={sending} className="w-full">
             {sending && <Spinner className="h-5 w-5" />}
-            {sending ? "Ipinapadala…" : "Ipadala ang Alerto"}
+            {canApprove ? "Ipadala ang Alerto" : "Isumite para sa Approval"}
           </Button>
         </div>
 
