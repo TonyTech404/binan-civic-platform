@@ -17,6 +17,8 @@ type AdminState = {
   role: Role | null;
   /** May approve/reject pending alerts (owner or granted can_approve). */
   canApprove: boolean;
+  /** Assigned barangay id, or null = city-wide. Scoped members see/send only this. */
+  barangayId: string | null;
   teamEmpty: boolean;
   loading: boolean;
   /** The session has a verified TOTP factor (the user has set up MFA). */
@@ -43,6 +45,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = React.useState<Session | null>(null);
   const [role, setRole] = React.useState<Role | null>(null);
   const [canApprove, setCanApprove] = React.useState(false);
+  const [barangayId, setBarangayId] = React.useState<string | null>(null);
   const [teamEmpty, setTeamEmpty] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [mfaEnrolled, setMfaEnrolled] = React.useState(false);
@@ -52,6 +55,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     if (!s) {
       setRole(null);
       setCanApprove(false);
+      setBarangayId(null);
       setTeamEmpty(false);
       return;
     }
@@ -62,6 +66,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
       const data = await res.json();
       setRole(data.role ?? null);
       setCanApprove(!!data.canApprove);
+      setBarangayId(data.barangayId ?? null);
       setTeamEmpty(!!data.teamEmpty);
     } catch {
       setRole(null);
@@ -140,6 +145,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     setSession(null);
     setRole(null);
     setCanApprove(false);
+    setBarangayId(null);
     setMfaEnrolled(false);
     setMfaSatisfied(false);
   }, []);
@@ -159,7 +165,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   );
 
   const value: AdminState = {
-    session, role, canApprove, teamEmpty, loading, mfaEnrolled, mfaSatisfied,
+    session, role, canApprove, barangayId, teamEmpty, loading, mfaEnrolled, mfaSatisfied,
     refresh, refreshMfa, signOut, authFetch,
   };
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

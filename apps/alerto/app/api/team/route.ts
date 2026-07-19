@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   const db = createServiceClient();
   const { data } = await db
     .from("alerto_admins")
-    .select("user_id, email, full_name, role, can_approve, created_at")
+    .select("user_id, email, full_name, role, can_approve, barangay_id, alerto_barangays(name), created_at")
     .order("created_at");
   return NextResponse.json({ members: data ?? [] });
 }
@@ -73,13 +73,14 @@ export async function PATCH(req: NextRequest) {
   const caller = await requirePermission(req, "team:manage");
   if (!caller) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
-  const { user_id, role, can_approve } = (await req.json()) as {
-    user_id?: string; role?: Role; can_approve?: boolean;
+  const body = (await req.json()) as {
+    user_id?: string; role?: Role; can_approve?: boolean; barangay_id?: string | null;
   };
+  const { user_id, role, can_approve } = body;
   if (!user_id) return NextResponse.json({ error: "user_id required." }, { status: 400 });
 
   const db = createServiceClient();
-  const update: { role?: Role; can_approve?: boolean } = {};
+  const update: { role?: Role; can_approve?: boolean; barangay_id?: string | null } = {};
 
   if (role !== undefined) {
     if (!ROLES.includes(role)) {
@@ -89,8 +90,13 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: "Cannot demote the last owner." }, { status: 409 });
     }
     update.role = role;
+    if (role === "owner") update.barangay_id = null; // owners are always city-wide
   }
   if (typeof can_approve === "boolean") update.can_approve = can_approve;
+  // Assign/clear a barangay (empty → city-wide). Owner-clearing above wins.
+  if ("barangay_id" in body && update.barangay_id === undefined) {
+    update.barangay_id = body.barangay_id || null;
+  }
 
   if (Object.keys(update).length === 0) {
     return NextResponse.json({ error: "Nothing to update." }, { status: 400 });

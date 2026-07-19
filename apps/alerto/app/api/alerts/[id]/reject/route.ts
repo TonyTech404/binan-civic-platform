@@ -24,6 +24,17 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     return NextResponse.json({ error: "This alert is not awaiting approval." }, { status: 409 });
   }
 
+  // A barangay-scoped approver may only reject alerts targeting their barangay.
+  if (caller.barangayId) {
+    const { data: t } = await db
+      .from("alerto_alert_targets")
+      .select("barangay_id")
+      .eq("alert_id", id)
+      .eq("barangay_id", caller.barangayId)
+      .maybeSingle();
+    if (!t) return NextResponse.json({ error: "Outside your barangay." }, { status: 403 });
+  }
+
   await db
     .from("alerto_alerts")
     .update({

@@ -18,6 +18,7 @@ export async function GET(req: NextRequest) {
     role: caller?.role ?? null,
     email: caller?.email ?? null,
     canApprove: caller?.canApprove ?? false,
+    barangayId: caller?.barangayId ?? null,
     teamEmpty: (count ?? 0) === 0,
   });
 }

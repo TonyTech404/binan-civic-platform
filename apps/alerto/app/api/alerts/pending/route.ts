@@ -16,7 +16,18 @@ export async function GET(req: NextRequest) {
     .select("id,title,body,category,severity,target_scope,created_at,created_by")
     .eq("status", "pending_approval")
     .order("created_at", { ascending: true });
-  const list = alerts ?? [];
+  let list = alerts ?? [];
+
+  // A barangay-scoped approver only sees pending alerts targeting their barangay.
+  if (caller.barangayId && list.length) {
+    const { data: mine } = await db
+      .from("alerto_alert_targets")
+      .select("alert_id")
+      .eq("barangay_id", caller.barangayId)
+      .in("alert_id", list.map((a) => a.id));
+    const allowed = new Set((mine ?? []).map((t) => t.alert_id));
+    list = list.filter((a) => allowed.has(a.id));
+  }
 
   // Resolve submitter emails (one query) and barangay-target counts.
   const submitterIds = [...new Set(list.map((a) => a.created_by).filter(Boolean))] as string[];
